@@ -2,7 +2,7 @@
 
 echo '# 05.ブリッジ'
 
-if [ "$GLINET_MODEL" = 'Slate' ]; then
+if [ "$GLINET_MODEL" = 'Slate' ] || [ "$GLINET_MODEL" = 'Mango' ]; then
 	cat <<- 'EOT'
 	uci add network device
 	uci set network.@device[-1].type='bridge'
