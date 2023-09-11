@@ -2,7 +2,7 @@
 
 echo "# 06.VLAN"
 
-if [ "$GLINET_MODEL" = 'Slate' ]; then
+if [ "$GLINET_MODEL" = 'Slate' ] || [ "$GLINET_MODEL" = 'Mango' ]; then
 	for i in $(seq 1 $vlan_max)
 	do
 		j=$((${i}+2))

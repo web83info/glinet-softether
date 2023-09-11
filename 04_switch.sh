@@ -2,7 +2,7 @@
 
 echo '# 04.スイッチ'
 
-if [ "$GLINET_MODEL" = 'Slate' ]; then
+if [ "$GLINET_MODEL" = 'Slate' ] || [ "$GLINET_MODEL" = 'Mango' ]; then
 
 	cat <<- EOT
 	# VLAN 1
