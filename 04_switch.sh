@@ -5,27 +5,26 @@ echo '# 04.スイッチ'
 if [ "$GLINET_MODEL" = 'Slate' ] || [ "$GLINET_MODEL" = 'Mango' ]; then
 
 	cat <<- EOT
-	# VLAN 1
-	uci set network.@switch_vlan[0].vlan='$VLAN1_VID'
-	uci set network.@switch_vlan[0].vid='$VLAN1_VID'
-	uci set network.@switch_vlan[0].ports='$VLAN1_PORTS'
-	uci set network.@switch_vlan[0].description='$VLAN1_NAME'
+	# VLAN LAN
+	uci set network.@switch_vlan[0].vlan='$VLAN_LAN_VID'
+	uci set network.@switch_vlan[0].vid='$VLAN_LAN_VID'
+	uci set network.@switch_vlan[0].ports='$VLAN_LAN_PORTS'
+	uci set network.@switch_vlan[0].description='$VLAN_LAN_NAME'
 
-	# VLAN 2
-	uci set network.@switch_vlan[1].vlan='$VLAN2_VID'
-	uci set network.@switch_vlan[1].vid='$VLAN2_VID'
-	uci set network.@switch_vlan[1].ports='$VLAN2_PORTS'
-	uci set network.@switch_vlan[1].description='$VLAN2_NAME'
+	# VLAN WAN
+	uci set network.@switch_vlan[1].vlan='$VLAN_WAN_VID'
+	uci set network.@switch_vlan[1].vid='$VLAN_WAN_VID'
+	uci set network.@switch_vlan[1].ports='$VLAN_WAN_PORTS'
+	uci set network.@switch_vlan[1].description='$VLAN_WAN_NAME'
 
 	EOT
 
 	for i in $(seq 1 $vlan_max)
 	do
-		j=$((${i}+2))
-		vlann_name=VLAN${j}_NAME
-		vlann_vlan=VLAN${j}_VID
-		vlann_vid=VLAN${j}_VID
-		vlann_ports=VLAN${j}_PORTS
+		vlann_name=VLAN${i}_NAME
+		vlann_vlan=VLAN${i}_VID
+		vlann_vid=VLAN${i}_VID
+		vlann_ports=VLAN${i}_PORTS
 		if [ -n "${!vlann_name}" ]; then
 			cat <<- EOT
 			# VLAN ${!vlann_vid}
