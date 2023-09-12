@@ -2,7 +2,7 @@
 
 echo '# 07.インターフェース'
 
-if [ "$GLINET_MODEL" = 'Slate' ] || [ "$GLINET_MODEL" = 'Mango' ]; then
+if [ "$glinet_has_switch" != 0 ]; then
 	for i in $(seq 1 $vlan_max)
 	do
 		vlann_name=VLAN${i}_NAME
@@ -26,7 +26,7 @@ if [ "$GLINET_MODEL" = 'Slate' ] || [ "$GLINET_MODEL" = 'Mango' ]; then
 	EOT
 fi
 
-if [ "$GLINET_MODEL" = 'Shadow' ]; then
+if [ "$glinet_has_switch" = 0 ]; then
 	for i in $(seq 1 $vlan_max)
 	do
 		vlann_name=VLAN${i}_NAME

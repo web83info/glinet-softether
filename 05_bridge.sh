@@ -2,7 +2,7 @@
 
 echo '# 05.ブリッジ'
 
-if [ "$GLINET_MODEL" = 'Slate' ] || [ "$GLINET_MODEL" = 'Mango' ]; then
+if [ "$glinet_has_switch" != 0 ]; then
 	cat <<- 'EOT'
 	uci add network device
 	uci set network.@device[-1].type='bridge'
@@ -15,7 +15,7 @@ if [ "$GLINET_MODEL" = 'Slate' ] || [ "$GLINET_MODEL" = 'Mango' ]; then
 		vlann_vid=VLAN${i}_VID
 		if [ -n "${!vlann_name}" ]; then
 			cat <<- EOT
-			uci add_list network.@device[-1].ports='eth0.${!vlann_vid}'
+			uci add_list network.@device[-1].ports='${glinet_switch_name}.${!vlann_vid}'
 			EOT
 		fi
 	done

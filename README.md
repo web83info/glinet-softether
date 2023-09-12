@@ -21,3 +21,20 @@ EOT
 cat <<- 'EOT'
 EOT
 ```
+
+* 変数がTRUEなら
+
+```
+if [ "$hoge" != 0 ]; then
+	# Do something
+fi
+```
+
+* 変数がFALSEなら
+
+```
+if [ "$hoge" = 0 ]; then
+	# Do something
+fi
+```
+

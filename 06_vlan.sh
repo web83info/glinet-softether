@@ -2,7 +2,7 @@
 
 echo "# 06.VLAN"
 
-if [ "$GLINET_MODEL" = 'Slate' ] || [ "$GLINET_MODEL" = 'Mango' ]; then
+if [ "$glinet_has_switch" != 0 ]; then
 	for i in $(seq 1 $vlan_max)
 	do
 		vlann_name=VLAN${i}_NAME
@@ -19,7 +19,7 @@ if [ "$GLINET_MODEL" = 'Slate' ] || [ "$GLINET_MODEL" = 'Mango' ]; then
 			uci add network bridge-vlan
 			uci set network.@bridge-vlan[-1].device='BR_VLANALL'
 			uci set network.@bridge-vlan[-1].vlan='${!vlann_vlan}'
-			uci add_list network.@bridge-vlan[-1].ports='eth0.${!vlann_vid}'
+			uci add_list network.@bridge-vlan[-1].ports='${glinet_switch_name}.${!vlann_vid}'
 			uci add_list network.@bridge-vlan[-1].ports='${tap_port}'
 
 			EOT
@@ -27,12 +27,12 @@ if [ "$GLINET_MODEL" = 'Slate' ] || [ "$GLINET_MODEL" = 'Mango' ]; then
 	done
 fi
 
-if [ "$GLINET_MODEL" = 'Shadow' ]; then
+if [ "$glinet_has_switch" = 0 ]; then
 	cat <<- EOT
 		uci add network bridge-vlan
 		uci set network.@bridge-vlan[-1].device='br-lan'
 		uci set network.@bridge-vlan[-1].vlan='1'
-		uci add_list network.@bridge-vlan[-1].ports='eth0'
+		uci add_list network.@bridge-vlan[-1].ports='${VLAN_LAN_PORTS}'
 
 	EOT
 	for i in $(seq 1 $vlan_max)
@@ -64,7 +64,7 @@ if [ "$GLINET_MODEL" = 'Shadow' ]; then
 	done
 	cat <<- EOT
 		uci del network.@device[0].ports
-		uci add_list network.@device[0].ports='eth0'
+		uci add_list network.@device[0].ports='${VLAN_LAN_PORTS}'
 	EOT
 	for i in $(seq 1 $hub_max)
 	do
