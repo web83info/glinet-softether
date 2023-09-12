@@ -20,6 +20,9 @@ fi
 if [ "$GLINET_MODEL" = 'Mango' ]; then
 	wifi_ssid_max=4
 fi
+if [ "$GLINET_MODEL" = 'Shadow' ]; then
+	wifi_ssid_max=8
+fi
 
 # スペース区切りの文字列を分割し、複数行で処理するためのサブルーチン
 function printf_multi() {

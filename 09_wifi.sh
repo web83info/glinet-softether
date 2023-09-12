@@ -12,6 +12,10 @@ if [ "$GLINET_MODEL" = 'Mango' ]; then
 	wireless_24g=radio0
 fi
 
+if [ "$GLINET_MODEL" = 'Shadow' ]; then
+	wireless_24g=radio0
+fi
+
 # 5GHz基本設定
 if [ -n "${wireless_5g}" ]; then
 	if [ "$WIRELESS5_ENABLE" != 0 ]; then
