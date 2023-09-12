@@ -17,6 +17,7 @@ vlan_max=10
 if [ "$GLINET_MODEL" = 'Slate' ]; then
 	# 内部構成
 	glinet_has_switch=1
+	glinet_switch_name=eth0
 
 	# SSID最大数
 	wifi_ssid_max=16
@@ -29,6 +30,7 @@ fi
 if [ "$GLINET_MODEL" = 'Mango' ]; then
 	# 内部構成
 	glinet_has_switch=1
+	glinet_switch_name=eth0
 
 	# SSID最大数
 	wifi_ssid_max=4

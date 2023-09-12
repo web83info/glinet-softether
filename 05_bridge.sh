@@ -15,7 +15,7 @@ if [ "$glinet_has_switch" != 0 ]; then
 		vlann_vid=VLAN${i}_VID
 		if [ -n "${!vlann_name}" ]; then
 			cat <<- EOT
-			uci add_list network.@device[-1].ports='eth0.${!vlann_vid}'
+			uci add_list network.@device[-1].ports='${glinet_switch_name}.${!vlann_vid}'
 			EOT
 		fi
 	done
