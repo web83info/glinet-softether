@@ -2,20 +2,6 @@
 
 echo '# 09.Wifi'
 
-# 機種別に周波数帯とradio{0,1}を対応させる
-if [ "$GLINET_MODEL" = 'Slate' ]; then
-	wireless_24g=radio1
-	wireless_5g=radio0
-fi
-
-if [ "$GLINET_MODEL" = 'Mango' ]; then
-	wireless_24g=radio0
-fi
-
-if [ "$GLINET_MODEL" = 'Shadow' ]; then
-	wireless_24g=radio0
-fi
-
 # 5GHz基本設定
 if [ -n "${wireless_5g}" ]; then
 	if [ "$WIRELESS5_ENABLE" != 0 ]; then

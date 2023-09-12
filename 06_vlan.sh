@@ -2,7 +2,7 @@
 
 echo "# 06.VLAN"
 
-if [ "$GLINET_MODEL" = 'Slate' ] || [ "$GLINET_MODEL" = 'Mango' ]; then
+if [ "$glinet_has_switch" != 0 ]; then
 	for i in $(seq 1 $vlan_max)
 	do
 		vlann_name=VLAN${i}_NAME
@@ -27,7 +27,7 @@ if [ "$GLINET_MODEL" = 'Slate' ] || [ "$GLINET_MODEL" = 'Mango' ]; then
 	done
 fi
 
-if [ "$GLINET_MODEL" = 'Shadow' ]; then
+if [ "$glinet_has_switch" = 0 ]; then
 	cat <<- EOT
 		uci add network bridge-vlan
 		uci set network.@bridge-vlan[-1].device='br-lan'
