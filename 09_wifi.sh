@@ -2,6 +2,26 @@
 
 echo '# 09.Wifi'
 
+if [ "$WIRELESS5_ENABLE" != 0 ] || [ "$WIRELESS24_ENABLE" != 0 ]; then
+	# radio0基本設定
+	if [ -n "${wireless_radio0_band}" ]; then
+		cat <<- EOT
+		# radio0基本設定
+		uci set wireless.radio0.band='${wireless_radio0_band}'
+
+		EOT
+	fi
+
+	# radio1基本設定
+	if [ -n "${wireless_radio1_band}" ]; then
+		cat <<- EOT
+		# radio1基本設定
+		uci set wireless.radio1.band='${wireless_radio1_band}'
+
+		EOT
+	fi
+fi
+
 # 5GHz基本設定
 if [ -n "${wireless_5g}" ]; then
 	if [ "$WIRELESS5_ENABLE" != 0 ]; then
