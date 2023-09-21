@@ -47,4 +47,15 @@ if [ "$glinet_has_switch" = 0 ]; then
 	uci del dhcp.@dnsmasq[0].nonwildcard
 
 	EOT
+	for i in $(seq 1 $vlan_max)
+	do
+		vlann_name=VLAN${i}_NAME
+		vlann_vid=VLAN${i}_VID
+		if [ -n "${!vlann_name}" ]; then
+			cat <<- EOT
+			uci add_list dhcp.@dnsmasq[0].notinterface='br-lan.${!vlann_vid}'
+			EOT
+		fi
+	done
+	echo
 fi
