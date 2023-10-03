@@ -29,6 +29,25 @@ if [ "$glinet_has_switch" != 0 ]; then
 			EOT
 		fi
 	done
+	echo
+fi
 
+if [ "$glinet_has_switch" = 0 ]; then
+	cat <<- EOT
+	uci add network device
+	uci set network.@device[-1].type='bridge'
+	uci set network.@device[-1].name='BR_VLANALL'
+	# uci add_list network.@device[-1].ports='$VLAN_LAN_PORTS'
+	EOT
+
+	for i in $(seq 1 $hub_max)
+	do
+		se_hubn_name=SE_HUB${i}_NAME
+		if [ -n "${!se_hubn_name}" ]; then
+			cat <<- EOT
+			uci add_list network.@device[-1].ports='tap_hub${i}'
+			EOT
+		fi
+	done
 	echo
 fi

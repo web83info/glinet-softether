@@ -32,7 +32,6 @@ cat <<- 'EOT'
 uci del network.lan.ip6assign
 uci del dhcp.lan.ra
 uci del dhcp.lan.ra_slaac
-uci del dhcp.lan.ra_flags
 uci del dhcp.lan.dhcpv6
 
 EOT
