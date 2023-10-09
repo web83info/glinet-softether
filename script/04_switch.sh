@@ -2,6 +2,7 @@
 
 echo '# 04.スイッチ'
 
+# スイッチあり
 if [ "$glinet_has_switch" != 0 ]; then
 
 	cat <<- EOT
@@ -39,4 +40,9 @@ if [ "$glinet_has_switch" != 0 ]; then
 		fi
 	done
 
+fi
+
+# スイッチなし
+if [ "$glinet_has_switch" = 0 ]; then
+	echo
 fi

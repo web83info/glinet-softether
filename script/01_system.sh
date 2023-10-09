@@ -22,18 +22,49 @@ uci set luci.main.lang=$SYSTEM_LANGUAGE
 EOT
 
 [ -n "$SYSTEM_LAN_IP" ] && cat <<- EOT
+# インターフェース "lan"
 # デフォルトIPアドレス変更
-uci set network.lan.ipaddr=$SYSTEM_LAN_IP
+uci set network.lan.ipaddr='$SYSTEM_LAN_IP'
+uci set dhcp.lan.ignore='1'
+EOT
+
+cat <<- EOT
+uci del network.@device[0].ports
+uci add_list network.@device[0].ports='$glinet_interface_lan'
 
 EOT
 
 cat <<- 'EOT'
-# lanのipv6を無効にする
+# インターフェース "lan"
+# ipv6を無効にする
 uci del network.lan.ip6assign
 uci del dhcp.lan.ra
 uci del dhcp.lan.ra_slaac
-uci del dhcp.lan.ra_flags
 uci del dhcp.lan.dhcpv6
+
+EOT
+
+[ -n "$SYSTEM_ADMIN_IP" ] && cat <<- EOT
+# デバイス "br-admin" 作成
+uci add network device
+uci set network.@device[-1].type='bridge'
+uci set network.@device[-1].name='br-admin'
+uci add_list network.@device[-1].ports='$glinet_interface_admin'
+
+# インターフェース "admin" 作成
+uci set network.admin=interface
+uci set network.admin.device='br-admin'
+uci set network.admin.proto='static'
+uci set network.admin.ipaddr='$SYSTEM_ADMIN_IP'
+uci set network.admin.netmask='255.255.255.0'
+
+uci add_list firewall.@zone[0].network='admin'
+
+uci set dhcp.admin=dhcp
+uci set dhcp.admin.interface='admin'
+uci set dhcp.admin.start='100'
+uci set dhcp.admin.limit='150'
+uci set dhcp.admin.leasetime='12h'
 
 EOT
 
