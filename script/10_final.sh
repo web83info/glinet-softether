@@ -31,7 +31,6 @@ if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
 	EOT
 fi
 
-
 cat <<- EOT
 # コミット＆再起動
 uci commit
