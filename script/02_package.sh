@@ -16,16 +16,28 @@ if [ "$PACKAGE_UPGRADE" != 0 ]; then
 	EOT
 fi
 
+# LuCI 言語ファイル
+cat <<- 'EOT'
+# LuCI 言語ファイルインストール
+opkg install luci-i18n-base-ja
+
+EOT
+
+# SoftEther
 cat <<- 'EOT'
 # SoftEtherインストール
 opkg install softethervpn-server
 
-EOT
-
-# SoftEther実行ファイルへのパスをPATHに追加
-cat <<- 'EOT'
 # SoftEther実行ファイルへのパスをPATHに追加
 echo 'export PATH=$PATH:/usr/libexec/softethervpn' >> /etc/profile
+
+EOT
+
+# ttyパッケージ
+cat <<- 'EOT'
+# ttyパッケージインストール
+opkg install luci-app-ttyd luci-i18n-ttyd-ja
+uci set ttyd.@ttyd[0].interface='@admin'
 
 EOT
 

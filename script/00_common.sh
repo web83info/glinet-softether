@@ -57,6 +57,24 @@ if [ "$GLINET_MODEL" = 'Shadow' ]; then
 	wireless_24g=radio0
 fi
 
+if [ "$GLINET_MODEL" = 'Creta' ]; then
+	# 内部構成
+	glinet_has_switch=1
+	glinet_switch_name=eth0
+	glinet_ethernet_wan_name=eth1
+	glinet_ethernet_lan1_name=eth0.1
+	glinet_ethernet_lan2_name=eth0.1
+	glinet_interface_admin=eth0.1
+	glinet_interface_lan=eth0
+
+	# SSID最大数
+	wifi_ssid_max=16
+
+	# 無線周波数帯
+	wireless_24g=radio1
+	wireless_5g=radio0
+fi
+
 if [ "$GLINET_MODEL" = 'Slate' ]; then
 	# 内部構成
 	glinet_has_switch=1
@@ -81,6 +99,23 @@ if [ "$GLINET_MODEL" = 'Beryl' ]; then
 	glinet_ethernet_wan_name=wan
 	glinet_ethernet_lan1_name=lan2
 	glinet_ethernet_lan2_name=lan1
+	glinet_interface_admin=br-vlantap.1
+	glinet_interface_lan=br-vlantap.2
+
+	# SSID最大数
+	wifi_ssid_max=16
+
+	# 無線周波数帯
+	wireless_24g=radio0
+	wireless_5g=radio1
+	wireless_radio0_band=2g
+fi
+
+if [ "$GLINET_MODEL" = 'AC1304' ]; then
+	# 内部構成
+	glinet_has_switch=0
+	glinet_ethernet_wan_name=wan
+	glinet_ethernet_lan1_name=lan
 	glinet_interface_admin=br-vlantap.1
 	glinet_interface_lan=br-vlantap.2
 

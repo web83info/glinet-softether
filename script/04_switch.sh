@@ -5,13 +5,16 @@ echo '# 04.スイッチ'
 # スイッチあり
 if [ "$glinet_has_switch" != 0 ]; then
 
-	cat <<- EOT
+	[ -n "$VLAN_LAN_NAME" ] && cat <<- EOT
 	# VLAN LAN
 	uci set network.@switch_vlan[0].vlan='$VLAN_LAN_VID'
 	uci set network.@switch_vlan[0].vid='$VLAN_LAN_VID'
 	uci set network.@switch_vlan[0].ports='$VLAN_LAN_PORTS'
 	uci set network.@switch_vlan[0].description='$VLAN_LAN_NAME'
 
+	EOT
+
+	[ -n "$VLAN_WAN_NAME" ] && cat <<- EOT
 	# VLAN WAN
 	uci set network.@switch_vlan[1].vlan='$VLAN_WAN_VID'
 	uci set network.@switch_vlan[1].vid='$VLAN_WAN_VID'
