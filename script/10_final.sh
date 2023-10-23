@@ -18,11 +18,11 @@ if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
 		<h2 name="content"><%=translate("GL.iNET")%></h2>
 		<p>Return to GL.iNET admin page.</p>
 		<hr>
-		<button  id="jump_glinet" class="cbi-button cbi-button-action important">GL.iNET Admin Page</button>
+		<button id="jump_glinet" class="cbi-button cbi-button-action important">GL.iNET Admin Page</button>
 	</div>
 	<script type="text/javascript">
 		document.getElementById("jump_glinet").onclick = function(){
-			open( "http://" + window.location.hostname + "/#/login", "_blank" ) ;
+			open( window.location.protocol + '//' + window.location.hostname + '/?', '_blank' ) ;
 		};
 	</script>
 	<%+footer%>
