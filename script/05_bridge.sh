@@ -49,6 +49,14 @@ if [ "$glinet_has_switch" = 0 ]; then
 	uci add_list network.@device[-1].ports='${glinet_ethernet_lan2_name}'
 	EOT
 
+	[ -n "$glinet_ethernet_lan3_name" ] && cat <<- EOT
+	uci add_list network.@device[-1].ports='${glinet_ethernet_lan3_name}'
+	EOT
+
+	[ -n "$glinet_ethernet_lan4_name" ] && cat <<- EOT
+	uci add_list network.@device[-1].ports='${glinet_ethernet_lan4_name}'
+	EOT
+
 	for i in $(seq 1 $hub_max)
 	do
 		se_hubn_name=SE_HUB${i}_NAME
