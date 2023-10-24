@@ -128,6 +128,18 @@ if [ "$GLINET_MODEL" = 'AC1304' ]; then
 	wireless_radio0_band=2g
 fi
 
+if [ "$GLINET_MODEL" = 'ERX' ]; then
+	# 内部構成
+	glinet_has_switch=0
+	glinet_ethernet_wan_name=eth0
+	glinet_ethernet_lan1_name=eth1
+	glinet_ethernet_lan2_name=eth2
+	glinet_ethernet_lan3_name=eth3
+	glinet_ethernet_lan4_name=eth4
+	glinet_interface_admin=br-vlantap.1
+	glinet_interface_lan=br-vlantap.2
+fi
+
 # スペース区切りの文字列を分割し、複数行で処理するためのサブルーチン
 function printf_multi() {
 	array=($2)
