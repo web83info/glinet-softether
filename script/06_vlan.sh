@@ -46,20 +46,17 @@ if [ "$glinet_has_switch" = 0 ]; then
 	do
 		vlann_name=VLAN${i}_NAME
 		vlann_vlan=VLAN${i}_VID
-		vlann_ports_name_variable=VLAN${i}_PORTS
-		vlann_ports_name=${!vlann_ports_name_variable}
-		vlann_ports_variable=glinet_ethernet_${vlann_ports_name}_name
-		vlann_ports=${!vlann_ports_variable}
-		vlann_ports_is_tagged=VLAN${i}_PORTS_IS_TAGGED
-		if [  -n "${!vlann_ports_is_tagged}" ] && [ "${!vlann_ports_is_tagged}" != 0 ]; then
-			vlann_ports+=':t'
-		fi
+		vlann_ports_name_variable=VLAN${i}_PORTS # VLAN1_PORTS
+		vlann_ports_name=${!vlann_ports_name_variable} # lan1, lan1:t, lan2, lan2:t, etc... OR "lan1:t lan2 lan3:t" separated by space.
+		vlann_ports_name_each=($vlann_ports_name)
+		# TAPデバイス
 		vlann_hub_to=VLAN${i}_HUB_TO
 		is_vlan=SE_HUB${!vlann_hub_to}_VLANTAG
 		tap_port=tap_hub${!vlann_hub_to}
 		if [ "${!is_vlan}" != 0 ]; then
 			tap_port+=':t'
 		fi
+		# config書き出し
 		if [ -n "${!vlann_name}" ]; then
 			cat <<- EOT
 			uci add network bridge-vlan
@@ -67,11 +64,20 @@ if [ "$glinet_has_switch" = 0 ]; then
 			uci set network.@bridge-vlan[-1].vlan='${!vlann_vlan}'
 			uci add_list network.@bridge-vlan[-1].ports='${tap_port}'
 			EOT
-			if [ -n "${vlann_ports}" ]; then
-				cat <<- EOT
-				uci add_list network.@bridge-vlan[-1].ports='${vlann_ports}'
-				EOT
-			fi
+			for each_port in "${vlann_ports_name_each[@]}"; do
+				each_port_head4=${each_port::4} # lan1, lan1, lan2, lan2, etc...
+				each_port_variable=glinet_ethernet_${each_port_head4}_name
+				each_port_tail2=${each_port: -2} # :t or not
+				each_port_name=${!each_port_variable}
+				if [ "$each_port_tail2" = ":t" ]; then
+					each_port_name+=':t'
+				fi
+				if [ -n "${each_port_name}" ]; then
+					cat <<- EOT
+					uci add_list network.@bridge-vlan[-1].ports='${each_port_name}'
+					EOT
+				fi
+			done;
 			echo
 		fi
 	done
