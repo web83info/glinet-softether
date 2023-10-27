@@ -1,6 +1,6 @@
-# 10.最終処理
+# 10.管理UI
 
-echo '# 10.最終処理'
+echo '# 10.管理UI'
 
 # GL.iNET管理画面に戻るリンクを追加
 if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
@@ -16,10 +16,3 @@ if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
 
 	EOT
 fi
-
-cat <<- EOT
-# コミット＆再起動
-uci commit
-reboot
-
-EOT

@@ -35,7 +35,13 @@ source ./08_dhcp.sh
 # 09.WiFi
 source ./09_wifi.sh
 
-# 10.最終処理
-source ./10_final.sh
+# 10.管理UI
+source ./10_adminui.sh
+
+# 11.ボタン
+source ./11_button.sh
+
+# 20.最終処理
+source ./20_final.sh
 
 exit

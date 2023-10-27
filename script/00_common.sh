@@ -31,6 +31,9 @@ if [ "$GLINET_MODEL" = 'Mango' ]; then
 	glinet_ethernet_lan1_name=eth0.1
 	glinet_interface_admin=eth0.1
 	glinet_interface_lan=eth0
+	glinet_button_side_gpio_regexp="|switch.*(hi|lo)"
+	glinet_button_side_gpio_left=hi
+	glinet_button_side_gpio_right=lo
 
 	# SSID最大数
 	wifi_ssid_max=4
@@ -52,6 +55,9 @@ if [ "$GLINET_MODEL" = 'Shadow' ]; then
 	fi
 	glinet_interface_admin=br-vlantap.1
 	glinet_interface_lan=br-vlantap.2
+	glinet_button_side_gpio_regexp="|switch.*(hi|lo)"
+	glinet_button_side_gpio_left=hi
+	glinet_button_side_gpio_right=lo
 
 	# SSID最大数
 	wifi_ssid_max=8
@@ -96,6 +102,9 @@ if [ "$GLINET_MODEL" = 'Slate' ]; then
 	glinet_ethernet_lan2_name=eth0.1
 	glinet_interface_admin=eth0.1
 	glinet_interface_lan=eth0
+	glinet_button_side_gpio_regexp="|switch-button.*(hi|lo)"
+	glinet_button_side_gpio_left=lo
+	glinet_button_side_gpio_right=hi
 
 	# SSID最大数
 	wifi_ssid_max=16
@@ -115,6 +124,9 @@ if [ "$GLINET_MODEL" = 'Beryl' ]; then
 	glinet_ethernet_lan2_name=lan1
 	glinet_interface_admin=br-vlantap.1
 	glinet_interface_lan=br-vlantap.2
+	glinet_button_side_gpio_regexp="|switch.*(hi|lo)"
+	glinet_button_side_gpio_left=lo
+	glinet_button_side_gpio_right=hi
 
 	# SSID最大数
 	wifi_ssid_max=16
