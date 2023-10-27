@@ -148,9 +148,9 @@ if [ "$GLINET_MODEL" = 'Convex' ]; then
 		wireless_radio1_band=5g
 	fi
 
-	if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
-		# 未対応
-	fi
+	# if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
+	#     # 未対応
+	# fi
 
 fi
 
