@@ -41,6 +41,9 @@ source ./10_adminui.sh
 # 11.ボタン
 source ./11_button.sh
 
+# 12.GoodCloud
+source ./12_goodcloud.sh
+
 # 20.最終処理
 source ./20_final.sh
 
