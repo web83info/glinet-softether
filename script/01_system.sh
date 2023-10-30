@@ -15,11 +15,25 @@ echo 'export PS1='\''\[\e[1;31m\]\u@\h:\w\$ \[\e[0m\]\'\' >> /etc/profile
 
 EOT
 
-[ -n "$SYSTEM_LANGUAGE" ] && cat <<- EOT
-# システム言語
-uci set luci.main.lang=$SYSTEM_LANGUAGE
+if [ -n "$SYSTEM_ROOT_PASSWORD" ] ;then
+	echo '# rootパスワード'
+	glinet_api "system" "set_password" "root" "" $SYSTEM_ROOT_PASSWORD
+	if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
+		echo "uci set oui-httpd.main.inited=1"
+	fi
+	echo
+fi
 
-EOT
+if [ -n "$SYSTEM_LANGUAGE" ] ;then
+	cat <<- EOT
+	# システム言語
+	uci set luci.main.lang=$SYSTEM_LANGUAGE
+	EOT
+	if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
+		echo "uci set oui-httpd.main.lang=$SYSTEM_LANGUAGE"
+	fi
+	echo
+fi
 
 [ -n "$SYSTEM_LAN_IP" ] && cat <<- EOT
 # インターフェース "lan"
