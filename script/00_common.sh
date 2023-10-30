@@ -222,3 +222,42 @@ function printf_multi() {
 		printf "$1\n" $S
 	done
 }
+
+# GL.iNET API呼び出し
+function glinet_api() {
+	# 呼び出すAPIごとのパラメタ設定
+	if [ "$1" = 'system' ] || [ "$2" = 'set_password' ]; then
+		param_detail=$(cat <<- EOT
+			"username": "$3",
+			"old_password": "$4",
+			"new_password": "$5"
+		EOT
+		)
+	fi
+
+	# API共通パラメタ
+	json=$(cat <<- EOT
+	'{
+		"jsonrpc":"2.0",
+		"method":"call",
+		"params":[
+			"",
+			"$1",
+			"$2",
+			{$param_detail}
+		],
+		"id":1
+	}'
+	EOT
+	)
+
+	# curlコマンド生成
+	param="curl"
+	param+=" -H 'glinet: 1'"
+	param+=" -s"
+	param+=" -k http://127.0.0.1/rpc"
+	param+=" -d "
+	param+=$json
+
+	echo $param
+}
