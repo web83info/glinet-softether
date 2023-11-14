@@ -39,7 +39,13 @@ if [ "$GLINET_MODEL" = 'Mango' ]; then
 	wifi_ssid_max=4
 
 	# 無線周波数帯
-	wireless_24g=radio0
+	if [ "$GLINET_FIRMWARE" = 'Vanilla' ]; then
+		wireless_24g=radio0
+	fi
+	if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
+		wireless_24g=mt7628
+	fi
+
 fi
 
 if [ "$GLINET_MODEL" = 'Shadow' ]; then
@@ -221,4 +227,43 @@ function printf_multi() {
 	for S in "${array[@]}"; do
 		printf "$1\n" $S
 	done
+}
+
+# GL.iNET API呼び出し
+function glinet_api() {
+	# 呼び出すAPIごとのパラメタ設定
+	if [ "$1" = 'system' ] || [ "$2" = 'set_password' ]; then
+		param_detail=$(cat <<- EOT
+			"username": "$3",
+			"old_password": "$4",
+			"new_password": "$5"
+		EOT
+		)
+	fi
+
+	# API共通パラメタ
+	json=$(cat <<- EOT
+	'{
+		"jsonrpc":"2.0",
+		"method":"call",
+		"params":[
+			"",
+			"$1",
+			"$2",
+			{$param_detail}
+		],
+		"id":1
+	}'
+	EOT
+	)
+
+	# curlコマンド生成
+	param="curl"
+	param+=" -H 'glinet: 1'"
+	param+=" -s"
+	param+=" -k http://127.0.0.1/rpc"
+	param+=" -d "
+	param+=$json
+
+	echo $param
 }
