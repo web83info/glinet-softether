@@ -39,7 +39,13 @@ if [ "$GLINET_MODEL" = 'Mango' ]; then
 	wifi_ssid_max=4
 
 	# 無線周波数帯
-	wireless_24g=radio0
+	if [ "$GLINET_FIRMWARE" = 'Vanilla' ]; then
+		wireless_24g=radio0
+	fi
+	if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
+		wireless_24g=mt7628
+	fi
+
 fi
 
 if [ "$GLINET_MODEL" = 'Shadow' ]; then
