@@ -2,71 +2,50 @@
 
 echo '# 09.Wifi'
 
-if [ "$WIRELESS5_ENABLE" != 0 ] || [ "$WIRELESS24_ENABLE" != 0 ]; then
-	# radio0基本設定
-	if [ -n "${wireless_radio0_band}" ]; then
-		cat <<- EOT
-		# radio0基本設定
-		uci set wireless.radio0.band='${wireless_radio0_band}'
+if [ -n "$WIRELESS_2G_ENABLE" ] && [ "$WIRELESS_2G_ENABLE" != 0 ]; then
+	# 2.4GHz基本設定
+	radio_2g_name=wireless_${wireless_2g_name}_name
+	radio_2g=${!radio_2g_name}
+	cat <<- EOT
+	# 2.4GHz基本設定
+	uci del wireless.default_${radio_2g}
+	uci del wireless.${radio_2g}.disabled
+	uci set wireless.${radio_2g}.band=2g
+	uci set wireless.${radio_2g}.channel='$WIRELESS_2G_CHANNEL'
+	uci set wireless.${radio_2g}.channels='$WIRELESS_2G_CHANNELS'
+	uci set wireless.${radio_2g}.country='$WIRELESS_2G_COUNTRY'
+	uci set wireless.${radio_2g}.cell_density='3'
 
-		EOT
-	fi
-
-	# radio1基本設定
-	if [ -n "${wireless_radio1_band}" ]; then
-		cat <<- EOT
-		# radio1基本設定
-		uci set wireless.radio1.band='${wireless_radio1_band}'
-
-		EOT
-	fi
+	EOT
 fi
 
-# 5GHz基本設定
-if [ -n "${wireless_5g}" ]; then
-	if [ "$WIRELESS5_ENABLE" != 0 ]; then
-		cat <<- EOT
-		# 5GHzから標準のSSID（OpenWrt）を削除
-		uci del wireless.default_${wireless_5g}
+if [ -n "$WIRELESS_5G_ENABLE" ] && [ "$WIRELESS_5G_ENABLE" != 0 ]; then
+	# 5GHz基本設定
+	radio_5g_name=wireless_${wireless_5g_name}_name
+	radio_5g=${!radio_5g_name}
+	cat <<- EOT
+	# 5GHz基本設定
+	uci del wireless.default_${radio_5g}
+	uci del wireless.${radio_5g}.disabled
+	uci set wireless.${radio_5g}.band=5g
+	uci set wireless.${radio_5g}.channel='$WIRELESS_5G_CHANNEL'
+	uci set wireless.${radio_5g}.channels='$WIRELESS_5G_CHANNELS'
+	uci set wireless.${radio_5g}.country='$WIRELESS_5G_COUNTRY'
+	uci set wireless.${radio_5g}.cell_density='3'
 
-		# 5GHz基本設定
-		uci del wireless.${wireless_5g}.disabled
-		uci set wireless.${wireless_5g}.channel='$WIRELESS5_CHANNEL'
-		uci set wireless.${wireless_5g}.channels='$WIRELESS5_CHANNELS'
-		uci set wireless.${wireless_5g}.country='$WIRELESS5_COUNTRY'
-		uci set wireless.${wireless_5g}.cell_density='3'
-
-		EOT
-	fi
+	EOT
 fi
 
-# 2.4GHz基本設定
-if [ -n "${wireless_24g}" ]; then
-	if [ "$WIRELESS24_ENABLE" != 0 ]; then
-		cat <<- EOT
-		# 2.4GHzから標準のSSID（OpenWrt）を削除
-		uci del wireless.default_${wireless_24g}
-
-		# 2.4GHz基本設定
-		uci del wireless.${wireless_24g}.disabled
-		uci set wireless.${wireless_24g}.channel='$WIRELESS24_CHANNEL'
-		uci set wireless.${wireless_24g}.channels='$WIRELESS24_CHANNELS'
-		uci set wireless.${wireless_24g}.country='$WIRELESS24_COUNTRY'
-		uci set wireless.${wireless_24g}.cell_density='3'
-
-		EOT
-	fi
-fi
-
+# 各SSID
 for i in $(seq 1 $wifi_ssid_max)
 do
 	wireless_wifin_name=WIRELESS_WIFI${i}_NAME
 	wireless_wifin_radio=WIRELESS_WIFI${i}_RADIO
-	if [ "${!wireless_wifin_radio}" = 5 ]; then
-		wireless_wifin_radio=$wireless_5g
+	if [ "${!wireless_wifin_radio}" = 2G ]; then
+		wireless_wifin_radio=${radio_2g}
 	fi
-	if [ "${!wireless_wifin_radio}" = 24 ]; then
-		wireless_wifin_radio=$wireless_24g
+	if [ "${!wireless_wifin_radio}" = 5G ]; then
+		wireless_wifin_radio=${radio_5g}
 	fi
 	wireless_wifin_ssid=WIRELESS_WIFI${i}_SSID
 	wireless_wifin_encryption=WIRELESS_WIFI${i}_ENCRYPTION
@@ -74,13 +53,13 @@ do
 	wireless_wifin_interface=WIRELESS_WIFI${i}_INTERFACE
 	if [ -n "${!wireless_wifin_name}" ]; then
 		cat <<- EOT
-		uci set wireless.wifinet${i}=wifi-iface
-		uci set wireless.wifinet${i}.device='$wireless_wifin_radio'
-		uci set wireless.wifinet${i}.mode='ap'
-		uci set wireless.wifinet${i}.ssid='${!wireless_wifin_ssid}'
-		uci set wireless.wifinet${i}.encryption='${!wireless_wifin_encryption}'
-		uci set wireless.wifinet${i}.key='${!wireless_wifin_key}'
-		uci set wireless.wifinet${i}.network='${!wireless_wifin_interface}'
+		uci set wireless.${!wireless_wifin_name}=wifi-iface
+		uci set wireless.${!wireless_wifin_name}.device='${wireless_wifin_radio}'
+		uci set wireless.${!wireless_wifin_name}.mode='ap'
+		uci set wireless.${!wireless_wifin_name}.ssid='${!wireless_wifin_ssid}'
+		uci set wireless.${!wireless_wifin_name}.encryption='${!wireless_wifin_encryption}'
+		uci set wireless.${!wireless_wifin_name}.key='${!wireless_wifin_key}'
+		uci set wireless.${!wireless_wifin_name}.network='${!wireless_wifin_interface}'
 
 		EOT
 	fi

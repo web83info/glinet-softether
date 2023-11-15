@@ -40,12 +40,12 @@ if [ "$GLINET_MODEL" = 'Mango' ]; then
 
 	# 無線周波数帯
 	if [ "$GLINET_FIRMWARE" = 'Vanilla' ]; then
-		wireless_24g=radio0
+		wireless_radio0_name=radio0
 	fi
 	if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
-		wireless_24g=mt7628
+		wireless_radio0_name=mt7628
 	fi
-
+	wireless_2g_name=radio0
 fi
 
 if [ "$GLINET_MODEL" = 'Shadow' ]; then
@@ -69,7 +69,9 @@ if [ "$GLINET_MODEL" = 'Shadow' ]; then
 	wifi_ssid_max=8
 
 	# 無線周波数帯
-	wireless_24g=radio0
+	wireless_radio0_name=radio0
+	wireless_radio0_band=2g
+	wireless_2g_name=radio0
 fi
 
 if [ "$GLINET_MODEL" = 'Creta' ]; then
@@ -89,10 +91,10 @@ if [ "$GLINET_MODEL" = 'Creta' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_24g=radio1
-	wireless_5g=radio0
-	wireless_radio0_band=5g
-	wireless_radio1_band=2g
+	wireless_radio0_name=radio0
+	wireless_radio1_name=radio1
+	wireless_2g_name=radio1
+	wireless_5g_name=radio0
 fi
 
 if [ "$GLINET_MODEL" = 'Slate' ]; then
@@ -116,10 +118,10 @@ if [ "$GLINET_MODEL" = 'Slate' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_24g=radio1
-	wireless_5g=radio0
-	wireless_radio0_band=5g
-	wireless_radio1_band=2g
+	wireless_radio0_name=radio0
+	wireless_radio1_name=radio1
+	wireless_2g_name=radio1
+	wireless_5g_name=radio0
 fi
 
 if [ "$GLINET_MODEL" = 'Beryl' ]; then
@@ -138,10 +140,10 @@ if [ "$GLINET_MODEL" = 'Beryl' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_24g=radio0
-	wireless_5g=radio1
-	wireless_radio0_band=2g
-	wireless_radio1_band=5g
+	wireless_radio0_name=radio0
+	wireless_radio1_name=radio1
+	wireless_2g_name=radio0
+	wireless_5g_name=radio1
 fi
 
 
@@ -160,10 +162,10 @@ if [ "$GLINET_MODEL" = 'Convex' ]; then
 		wifi_ssid_max=16
 
 		# 無線周波数帯
-		wireless_24g=radio0
-		wireless_5g=radio1
-		wireless_radio0_band=2g
-		wireless_radio1_band=5g
+		wireless_radio0_name=radio0
+		wireless_radio1_name=radio1
+		wireless_2g_name=radio0
+		wireless_5g_name=radio1
 	fi
 
 	# if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
@@ -185,10 +187,10 @@ if [ "$GLINET_MODEL" = 'SlateAX' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_24g=radio1
-	wireless_5g=radio0
-	wireless_radio0_band=5g
-	wireless_radio1_band=2g
+	wireless_radio0_name=radio0
+	wireless_radio1_name=radio1
+	wireless_2g_name=radio1
+	wireless_5g_name=radio0
 fi
 
 if [ "$GLINET_MODEL" = 'AC1304' ]; then
@@ -203,10 +205,10 @@ if [ "$GLINET_MODEL" = 'AC1304' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_24g=radio0
-	wireless_5g=radio1
-	wireless_radio0_band=2g
-	wireless_radio1_band=5g
+	wireless_radio0_name=radio0
+	wireless_radio1_name=radio1
+	wireless_2g_name=radio0
+	wireless_5g_name=radio1
 fi
 
 if [ "$GLINET_MODEL" = 'ERX' ]; then
@@ -231,7 +233,12 @@ function printf_multi() {
 
 # GL.iNET API呼び出し
 function glinet_api() {
+	if [ "$GLINET_FIRMWARE" != 'Stock' ]; then
+		return
+	fi
+
 	# 呼び出すAPIごとのパラメタ設定
+	# rootパスワード
 	if [ "$1" = 'system' ] || [ "$2" = 'set_password' ]; then
 		param_detail=$(cat <<- EOT
 			"username": "$3",
@@ -241,6 +248,17 @@ function glinet_api() {
 		)
 	fi
 
+	# GoodCloudログイン
+	if [ "$1" = 'cloud' ] || [ "$2" = 'set_config' ]; then
+		param_detail=$(cat <<- EOT
+			"cloud_enable": true,
+			"rtty_ssh": true,
+			"rtty_web": true,
+			"clear_token": true,
+			"serverzone": "$3"
+		EOT
+		)
+	fi
 	# API共通パラメタ
 	json=$(cat <<- EOT
 	'{
