@@ -31,7 +31,7 @@ if [ -n "$SMTP_ENABLE" ] && [ "$SMTP_ENABLE" != 0 ]; then
 	if [ -n "$ROOT_EMAIL_TO" ] ; then
 		cat <<- EOT
 		# sendmailとして使えるようにシンボリックリンク
-		echo 'ln -s /usr/bin/msmtp /usr/sbin/sendmail'
+		ln -s /usr/bin/msmtp /usr/sbin/sendmail
 
 		# エイリアス
 		echo 'default:${ROOT_EMAIL_TO}' >> /etc/aliases
