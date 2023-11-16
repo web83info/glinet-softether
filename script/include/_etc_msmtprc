@@ -1,0 +1,15 @@
+defaults
+account default
+host SMTP_HOST
+port SMTP_PORT
+tls SMTP_TLS
+tls_starttls SMTP_STARTTLS
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+auth on
+
+from SMTP_FROM
+user SMTP_USER
+password SMTP_PASSWORD
+
+aliases /etc/aliases
+syslog LOG_MAIL

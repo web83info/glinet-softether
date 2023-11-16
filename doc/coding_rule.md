@@ -35,6 +35,14 @@ if [ "$hoge" = 0 ]; then
 fi
 ```
 
+* 変数が定義されていてFLASEでなければ（＝有効化されていれば）
+
+```
+if [ -n "$hoge" ] && [ "$hoge" != 0 ]; then
+	# Do something
+fi
+```
+
 # 機種ごとの制限
 
 Issue を参照
