@@ -239,7 +239,7 @@ function glinet_api() {
 
 	# 呼び出すAPIごとのパラメタ設定
 	# rootパスワード
-	if [ "$1" = 'system' ] || [ "$2" = 'set_password' ]; then
+	if [ "$1" = 'system' ] && [ "$2" = 'set_password' ]; then
 		param_detail=$(cat <<- EOT
 			"username": "$3",
 			"old_password": "$4",
@@ -249,7 +249,7 @@ function glinet_api() {
 	fi
 
 	# GoodCloudログイン
-	if [ "$1" = 'cloud' ] || [ "$2" = 'set_config' ]; then
+	if [ "$1" = 'cloud' ] && [ "$2" = 'set_config' ]; then
 		param_detail=$(cat <<- EOT
 			"cloud_enable": true,
 			"rtty_ssh": true,
