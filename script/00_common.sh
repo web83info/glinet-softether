@@ -2,12 +2,12 @@
 
 # 定数
 
-# 機種名（指定がないときはSlateを指定したものとみなす）
+# 機種名（既定値：Slate）
 if [ -z "$GLINET_MODEL" ]; then
 	GLINET_MODEL=Slate
 fi
 
-# ファームウェア（指定がないときはStockを指定したものとみなす）
+# ファームウェア（既定値：Stock）
 if [ -z "$GLINET_FIRMWARE" ]; then
 	GLINET_FIRMWARE=Stock
 fi
