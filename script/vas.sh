@@ -44,6 +44,9 @@ source ./11_button.sh
 # 12.GoodCloud
 source ./12_goodcloud.sh
 
+# 13.SMTP
+source ./13_smtp.sh
+
 # 20.最終処理
 source ./20_final.sh
 
