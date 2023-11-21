@@ -108,3 +108,11 @@ if [ -n "$SYSTEM_NTP_SERVER" ]; then
 	printf_multi "uci add_list system.ntp.server=%s" "$SYSTEM_NTP_SERVER"
 	echo
 fi
+
+if [ -n "$SSH_PUBKEY" ]; then
+	cat <<- EOT
+	# SSH公開鍵
+	echo '$SSH_PUBKEY' > /etc/dropbear/authorized_keys
+	EOT
+	echo
+fi
