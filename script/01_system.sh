@@ -15,11 +15,18 @@ echo 'export PS1='\''\[\e[1;31m\]\u@\h:\w\$ \[\e[0m\]\'\' >> /etc/profile
 
 EOT
 
+echo '# rootパスワード'
 if [ -n "$SYSTEM_ROOT_PASSWORD" ] ;then
-	echo '# rootパスワード'
-	glinet_api "system" "set_password" "root" "" $SYSTEM_ROOT_PASSWORD
+	if [ "$GLINET_FIRMWARE" = 'Vanilla' ]; then
+		cat <<- EOT
+		echo -e "$SYSTEM_ROOT_PASSWORD\n$SYSTEM_ROOT_PASSWORD" | passwd
+		EOT
+	fi
 	if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
-		echo "uci set oui-httpd.main.inited=1"
+		glinet_api "system" "set_password" "root" "" $SYSTEM_ROOT_PASSWORD
+		if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
+			echo "uci set oui-httpd.main.inited=1"
+		fi
 	fi
 	echo
 fi
