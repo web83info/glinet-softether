@@ -149,29 +149,37 @@ fi
 
 if [ "$GLINET_MODEL" = 'Convex' ]; then
 
+	# 内部構成
 	if [ "$GLINET_FIRMWARE" = 'Vanilla' ]; then
-		# 内部構成
 		glinet_has_switch=0
 		glinet_ethernet_wan_name=wan
 		glinet_ethernet_lan1_name=lan1
 		glinet_ethernet_lan2_name=lan2
-		glinet_interface_admin=br-vlantap.1
-		glinet_interface_lan=br-vlantap.2
-
-		# SSID最大数
-		wifi_ssid_max=16
-
-		# 無線周波数帯
-		wireless_radio0_name=radio0
-		wireless_radio1_name=radio1
-		wireless_2g_name=radio0
-		wireless_5g_name=radio1
 	fi
 
-	# if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
-	#     # 未対応
-	# fi
+	if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
+		glinet_has_switch=1
+		glinet_switch_name=eth0
+		glinet_switch_port_cpu=0
+		glinet_switch_port_wan=5
+		glinet_switch_port_lan1=3
+		glinet_switch_port_lan2=4
+		glinet_ethernet_wan_name=eth1
+		glinet_ethernet_lan1_name=eth0.1
+		glinet_ethernet_lan2_name=eth0.1
+	fi
 
+	glinet_interface_admin=br-vlantap.1
+	glinet_interface_lan=br-vlantap.2
+
+	# SSID最大数
+	wifi_ssid_max=16
+
+	# 無線周波数帯
+	wireless_radio0_name=radio0
+	wireless_radio1_name=radio1
+	wireless_2g_name=radio0
+	wireless_5g_name=radio1
 fi
 
 if [ "$GLINET_MODEL" = 'SlateAX' ]; then
