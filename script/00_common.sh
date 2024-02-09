@@ -124,6 +124,33 @@ if [ "$GLINET_MODEL" = 'Slate' ]; then
 	wireless_5g_name=radio0
 fi
 
+if [ "$GLINET_MODEL" = 'Opal' ]; then
+	# 内部構成
+	glinet_has_switch=1
+	glinet_switch_name=eth0
+	glinet_switch_port_cpu=5
+	glinet_switch_port_wan=0
+	glinet_switch_port_lan1=1
+	glinet_switch_port_lan2=2
+	glinet_ethernet_wan_name=eth0.2
+	glinet_ethernet_lan1_name=eth0.1
+	glinet_ethernet_lan2_name=eth0.1
+	glinet_interface_admin=eth0.1
+	glinet_interface_lan=eth0
+	glinet_button_side_gpio_regexp="|switch-button.*(hi|lo)"
+	glinet_button_side_gpio_left=lo
+	glinet_button_side_gpio_right=hi
+
+	# SSID最大数
+	wifi_ssid_max=16
+
+	# 無線周波数帯
+	wireless_radio0_name=radio0
+	wireless_radio1_name=radio1
+	wireless_2g_name=radio0
+	wireless_5g_name=radio1
+fi
+
 if [ "$GLINET_MODEL" = 'Beryl' ]; then
 	# 内部構成
 	glinet_has_switch=0
