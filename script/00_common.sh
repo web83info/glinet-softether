@@ -142,7 +142,7 @@ if [ "$GLINET_MODEL" = 'Opal' ]; then
 	glinet_button_side_gpio_right=hi
 
 	# SSID最大数
-	wifi_ssid_max=16
+	wifi_ssid_max=4
 
 	# 無線周波数帯
 	wireless_radio0_name=radio0
