@@ -32,6 +32,15 @@ function button_wifi_on_off() {
 	uci set switch-button.@main[0].func="wifi"
 
 	EOT
+
+	cat <<- EOT
+	# シェルログイン時にWifiの状況を通知
+	cat >> /etc/profile << 'EOF'
+	$(<include/_etc_profile)
+	EOF
+
+	EOT
+
 }
 
 echo '# 11.ボタン'
