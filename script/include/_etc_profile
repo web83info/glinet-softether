@@ -1,16 +1,16 @@
 if [ "$(uci -q get switch-button.@main[0].func)" = "wifi" ]; then
 
-	gpio_switch=$(grep -E -o "|switch.*(hi|lo)" /sys/kernel/debug/gpio)
+	gpio_switch=$(grep -E -o "GLINET_BUTTON_SIDE_GPIO_REGEXP" /sys/kernel/debug/gpio)
 	switch_position="${gpio_switch: -2}"
 	logger -p notice -t wifi-toggle-init $switch_position
 
 	# Left
-	if [ "$switch_position" = "hi" ]; then
+	if [ "$switch_position" = "GLINET_BUTTON_SIDE_GPIO_LEFT" ]; then
 		echo 'WiFi is On.'
 	fi
 
 	# Right
-	if [ "$switch_position" = "lo" ]; then
+	if [ "$switch_position" = "GLINET_BUTTON_SIDE_GPIO_RIGHT" ]; then
 		echo 'WiFi is Off.'
 	fi
 

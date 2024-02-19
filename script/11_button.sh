@@ -1,16 +1,21 @@
 # 11.ボタン
 
 function button_wifi_on_off() {
-	script=$(<include/_etc_rc.local)
-	script=${script//GLINET_BUTTON_SIDE_GPIO_REGEXP/${glinet_button_side_gpio_regexp}}
-	script=${script//GLINET_BUTTON_SIDE_GPIO_LEFT/${glinet_button_side_gpio_left}}
-	script=${script//GLINET_BUTTON_SIDE_GPIO_RIGHT/${glinet_button_side_gpio_right}}
+	script_rc_local=$(<include/_etc_rc.local)
+	script_rc_local=${script_rc_local//GLINET_BUTTON_SIDE_GPIO_REGEXP/${glinet_button_side_gpio_regexp}}
+	script_rc_local=${script_rc_local//GLINET_BUTTON_SIDE_GPIO_LEFT/${glinet_button_side_gpio_left}}
+	script_rc_local=${script_rc_local//GLINET_BUTTON_SIDE_GPIO_RIGHT/${glinet_button_side_gpio_right}}
+
+	script_profile=$(<include/_etc_profile)
+	script_profile=${script_profile//GLINET_BUTTON_SIDE_GPIO_REGEXP/${glinet_button_side_gpio_regexp}}
+	script_profile=${script_profile//GLINET_BUTTON_SIDE_GPIO_LEFT/${glinet_button_side_gpio_left}}
+	script_profile=${script_profile//GLINET_BUTTON_SIDE_GPIO_RIGHT/${glinet_button_side_gpio_right}}
 
 	cat <<- EOT
 	# ボタンの位置に応じてWifiのオンオフを切り替える
 	sed -i 's/exit 0//g' /etc/rc.local
 	cat > /etc/rc.local << 'EOF'
-	$script
+	$script_rc_local
 	EOF
 
 	chmod +x /etc/rc.local
@@ -36,7 +41,7 @@ function button_wifi_on_off() {
 	cat <<- EOT
 	# シェルログイン時にWifiの状況を通知
 	cat >> /etc/profile << 'EOF'
-	$(<include/_etc_profile)
+	$script_profile
 	EOF
 
 	EOT
