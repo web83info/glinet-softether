@@ -173,7 +173,6 @@ if [ "$GLINET_MODEL" = 'Beryl' ]; then
 	wireless_5g_name=radio1
 fi
 
-
 if [ "$GLINET_MODEL" = 'Convex' ]; then
 
 	if [ "$GLINET_FIRMWARE" = 'Vanilla' ]; then
@@ -198,6 +197,23 @@ if [ "$GLINET_MODEL" = 'Convex' ]; then
 	# if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
 	#     # 未対応
 	# fi
+
+fi
+
+if [ "$GLINET_MODEL" = 'Brume' ]; then
+	# 内部構成
+	glinet_has_switch=0
+	glinet_ethernet_wan_name=wan
+	glinet_ethernet_lan1_name=lan0
+	glinet_ethernet_lan2_name=lan1
+	glinet_interface_admin=br-vlantap.1
+	glinet_interface_lan=br-vlantap.2
+	glinet_button_side_gpio_regexp="|switch.*(hi|lo)"
+	glinet_button_side_gpio_left=lo
+	glinet_button_side_gpio_right=hi
+
+	# SSID最大数
+	wifi_ssid_max=0
 
 fi
 
