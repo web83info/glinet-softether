@@ -6,13 +6,36 @@ for i in $(seq 1 $vlan_max)
 do
 	vlann_name=VLAN${i}_NAME
 	vlann_vid=VLAN${i}_VID
-	if [ -n "${!vlann_name}" ]; then
-		cat <<- EOT
-		uci set network.${!vlann_name}=interface
-		uci set network.${!vlann_name}.proto='none'
-		uci set network.${!vlann_name}.device='br-vlantap.${!vlann_vid}'
+	vlann_proto=VLAN${i}_PROTO
+	vlann_ipaddr=VLAN${i}_IPADDR
+	vlann_netmask=VLAN${i}_NETMASK
+	vlann_gateway=VLAN${i}_GATEWAY
 
-		EOT
+	if [ -n "${!vlann_name}" ]; then
+
+		if [ "${!vlann_proto}" = 'static' ]; then
+
+			cat <<- EOT
+			uci set network.${!vlann_name}=interface
+			uci set network.${!vlann_name}.proto='${!vlann_proto}'
+			uci set network.${!vlann_name}.ipaddr='${!vlann_ipaddr}'
+			uci set network.${!vlann_name}.netmask='${!vlann_netmask}'
+			uci set network.${!vlann_name}.gateway='${!vlann_gateway}'
+			uci set network.${!vlann_name}.device='br-vlantap.${!vlann_vid}'
+
+			EOT
+
+		else
+
+			cat <<- EOT
+			uci set network.${!vlann_name}=interface
+			uci set network.${!vlann_name}.proto='none'
+			uci set network.${!vlann_name}.device='br-vlantap.${!vlann_vid}'
+
+			EOT
+
+		fi
+
 	fi
 done
 cat <<- 'EOT'
