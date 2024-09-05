@@ -10,6 +10,7 @@ do
 	vlann_ipaddr=VLAN${i}_IPADDR
 	vlann_netmask=VLAN${i}_NETMASK
 	vlann_gateway=VLAN${i}_GATEWAY
+	vlann_zone=VLAN${i}_ZONE
 
 	if [ -n "${!vlann_name}" ]; then
 
@@ -33,6 +34,26 @@ do
 			uci set network.${!vlann_name}.device='br-vlantap.${!vlann_vid}'
 
 			EOT
+
+		fi
+
+		if [ -n "${!vlann_zone}" ]; then
+
+			if [ "${!vlann_zone}" = 'lan' ]; then
+
+				cat <<- EOT
+				uci add_list firewall.@zone[0].network='${!vlann_name}'
+
+				EOT
+
+			else
+
+				cat <<- EOT
+				uci add_list firewall.${!vlann_zone}.network='${!vlann_name}'
+
+				EOT
+
+			fi
 
 		fi
 
