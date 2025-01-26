@@ -33,10 +33,14 @@ else
 	softether_opkg=softethervpn-server
 fi
 
-cat <<- 'EOT'
+cat <<- EOT
 # SoftEtherインストール
-opkg install softethervpn-server
+opkg install $softether_opkg
+sleep 15
 
+EOT
+
+cat <<- 'EOT'
 # SoftEther実行ファイルへのパスをPATHに追加
 echo 'export PATH=$PATH:/usr/libexec/softethervpn' >> /etc/profile
 
