@@ -12,6 +12,11 @@ if [ -z "$GLINET_FIRMWARE" ]; then
 	GLINET_FIRMWARE=Stock
 fi
 
+# SoftEtherバージョン（既定値：4）
+if [ -z "$SOFTETHER_VERSION" ]; then
+	GLINET_FIRMWARE=4
+fi
+
 # 仮想ハブ最大数
 hub_max=5
 

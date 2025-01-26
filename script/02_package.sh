@@ -24,6 +24,15 @@ opkg install luci-i18n-base-ja
 EOT
 
 # SoftEther
+
+if [ "$SOFTETHER_VERSION" = '4' ]; then
+	softether_opkg=softethervpn-server
+elif [ "$SOFTETHER_VERSION" = '5' ]; then
+	softether_opkg=softethervpn5-server
+else
+	softether_opkg=softethervpn-server
+fi
+
 cat <<- 'EOT'
 # SoftEtherインストール
 opkg install softethervpn-server
