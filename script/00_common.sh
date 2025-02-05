@@ -271,6 +271,19 @@ if [ "$GLINET_MODEL" = 'ERX' ]; then
 	glinet_interface_lan=br-vlantap.2
 fi
 
+if [ "$GLINET_MODEL" = 'FG50E' ]; then
+	# 内部構成
+	glinet_has_switch=0
+	glinet_ethernet_wan_name=br-wan
+	glinet_ethernet_lan1_name=lan1
+	glinet_ethernet_lan2_name=lan2
+	glinet_ethernet_lan3_name=lan3
+	glinet_ethernet_lan4_name=lan4
+	glinet_ethernet_lan5_name=lan5
+	glinet_interface_admin=br-vlantap.1
+	glinet_interface_lan=br-vlantap.2
+fi
+
 # スペース区切りの文字列を分割し、複数行で処理するためのサブルーチン
 function printf_multi() {
 	array=($2)
