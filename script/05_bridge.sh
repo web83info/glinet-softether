@@ -41,21 +41,13 @@ if [ "$glinet_has_switch" = 0 ]; then
 	uci set network.@device[-1].name='br-vlantap'
 	EOT
 
-	[ -n "$glinet_ethernet_lan1_name" ] && cat <<- EOT
-	uci add_list network.@device[-1].ports='${glinet_ethernet_lan1_name}'
-	EOT
-
-	[ -n "$glinet_ethernet_lan2_name" ] && cat <<- EOT
-	uci add_list network.@device[-1].ports='${glinet_ethernet_lan2_name}'
-	EOT
-
-	[ -n "$glinet_ethernet_lan3_name" ] && cat <<- EOT
-	uci add_list network.@device[-1].ports='${glinet_ethernet_lan3_name}'
-	EOT
-
-	[ -n "$glinet_ethernet_lan4_name" ] && cat <<- EOT
-	uci add_list network.@device[-1].ports='${glinet_ethernet_lan4_name}'
-	EOT
+	for i in $(seq 1 8)
+	do
+		glinet_ethernet_lann_name=glinet_ethernet_lan${i}_name
+		[ -n "${!glinet_ethernet_lann_name}" ] && cat <<- EOT
+		uci add_list network.@device[-1].ports='${!glinet_ethernet_lann_name}'
+		EOT
+	done
 
 	for i in $(seq 1 $hub_max)
 	do
