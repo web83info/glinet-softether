@@ -50,6 +50,7 @@ EOT
 cat <<- 'EOT'
 # ttyパッケージインストール
 opkg install luci-app-ttyd luci-i18n-ttyd-ja
+uci delete ttyd.@ttyd[0].interface
 
 EOT
 
