@@ -1,3 +1,18 @@
+# 00.スクリプトコメント
+
+echo '# 00.スクリプトコメント'
+
+for i in $(seq 1 9)
+do
+	commentn=COMMENT${i}
+	if [ -n "${!commentn}" ]; then
+		cat <<- EOT
+		echo "${!commentn}"
+		EOT
+	fi
+done
+echo
+
 # 01.システム初期設定
 
 echo '# 01.システム初期設定'
