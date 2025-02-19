@@ -289,6 +289,24 @@ if [ "$GLINET_MODEL" = 'FG50E' ]; then
 	glinet_interface_lan=br-vlantap.2
 fi
 
+if [ "$GLINET_MODEL" = 'WABI1750PS' ]; then
+	# 内部構成
+	glinet_has_switch=0
+	glinet_ethernet_lan1_name=eth0
+	glinet_ethernet_lan2_name=eth1
+	glinet_interface_admin=br-vlantap.1
+	glinet_interface_lan=br-vlantap.2
+
+	# SSID最大数
+	wifi_ssid_max=16
+
+	# 無線周波数帯
+	wireless_radio0_name=radio0
+	wireless_radio1_name=radio1
+	wireless_2g_name=radio1
+	wireless_5g_name=radio0
+fi
+
 # スペース区切りの文字列を分割し、複数行で処理するためのサブルーチン
 function printf_multi() {
 	array=($2)
