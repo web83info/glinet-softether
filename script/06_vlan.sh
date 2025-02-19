@@ -22,10 +22,19 @@ if [ "$glinet_has_switch" != 0 ]; then
 			uci add network bridge-vlan
 			uci set network.@bridge-vlan[-1].device='br-vlantap'
 			uci set network.@bridge-vlan[-1].vlan='${!vlann_vlan}'
-			uci add_list network.@bridge-vlan[-1].ports='${tap_port}'
+			EOT
+
+			if [ -n "${!vlann_hub_to}" ]; then
+				cat <<- EOT
+				uci add_list network.@bridge-vlan[-1].ports='${tap_port}'
+				EOT
+			fi
+
+			cat <<- EOT
 			uci add_list network.@bridge-vlan[-1].ports='${glinet_switch_name}.${!vlann_vid}'
 
 			EOT
+
 		fi
 	done
 fi
@@ -85,8 +94,14 @@ if [ "$glinet_has_switch" = 0 ]; then
 			uci add network bridge-vlan
 			uci set network.@bridge-vlan[-1].device='br-vlantap'
 			uci set network.@bridge-vlan[-1].vlan='${!vlann_vlan}'
-			uci add_list network.@bridge-vlan[-1].ports='${tap_port}'
 			EOT
+
+			if [ -n "${!vlann_hub_to}" ]; then
+				cat <<- EOT
+				uci add_list network.@bridge-vlan[-1].ports='${tap_port}'
+				EOT
+			fi
+
 			for each_port in "${vlann_ports_name_each[@]}"; do
 				each_port_head4=${each_port::4}
 				each_port_variable=glinet_ethernet_${each_port_head4}_name
