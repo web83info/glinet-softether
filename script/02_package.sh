@@ -25,26 +25,30 @@ EOT
 
 # SoftEther
 
-if [ "$SOFTETHER_VERSION" = '4' ]; then
-	softether_opkg=softethervpn-server
-elif [ "$SOFTETHER_VERSION" = '5' ]; then
-	softether_opkg=softethervpn5-server
-else
-	softether_opkg=softethervpn-server
+if [ "$SOFTETHER_INSTALL" != 0 ]; then
+
+	if [ "$SOFTETHER_VERSION" = '4' ]; then
+		softether_opkg=softethervpn-server
+	elif [ "$SOFTETHER_VERSION" = '5' ]; then
+		softether_opkg=softethervpn5-server
+	else
+		softether_opkg=softethervpn-server
+	fi
+
+	cat <<- EOT
+	# SoftEtherインストール
+	opkg install $softether_opkg
+	sleep 15
+
+	EOT
+
+	cat <<- 'EOT'
+	# SoftEther実行ファイルへのパスをPATHに追加
+	echo 'export PATH=$PATH:/usr/libexec/softethervpn' >> /etc/profile
+
+	EOT
+
 fi
-
-cat <<- EOT
-# SoftEtherインストール
-opkg install $softether_opkg
-sleep 15
-
-EOT
-
-cat <<- 'EOT'
-# SoftEther実行ファイルへのパスをPATHに追加
-echo 'export PATH=$PATH:/usr/libexec/softethervpn' >> /etc/profile
-
-EOT
 
 # ttyパッケージ
 cat <<- 'EOT'

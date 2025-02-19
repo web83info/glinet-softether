@@ -12,6 +12,11 @@ if [ -z "$GLINET_FIRMWARE" ]; then
 	GLINET_FIRMWARE=Stock
 fi
 
+# SoftEtherインストール（既定値：1=Yes）
+if [ -z "$SOFTETHER_VERSION" ]; then
+	SOFTETHER_INSTALL=1
+fi
+
 # SoftEtherバージョン（既定値：4）
 if [ -z "$SOFTETHER_VERSION" ]; then
 	SOFTETHER_VERSION=4
