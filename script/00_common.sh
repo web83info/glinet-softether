@@ -13,7 +13,7 @@ if [ -z "$GLINET_FIRMWARE" ]; then
 fi
 
 # SoftEtherインストール（既定値：1=Yes）
-if [ -z "$SOFTETHER_VERSION" ]; then
+if [ -z "$SOFTETHER_INSTALL" ]; then
 	SOFTETHER_INSTALL=1
 fi
 
