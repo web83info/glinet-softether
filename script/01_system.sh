@@ -17,6 +17,20 @@ echo
 
 echo '# 01.システム初期設定'
 
+# 事前実行コマンド
+echo '# 事前実行コマンド'
+
+for i in $(seq 1 9)
+do
+	command_beforen=COMMAND_BEFORE${i}
+	if [ -n "${!command_beforen}" ]; then
+		cat <<- EOT
+		${!command_beforen}
+		EOT
+	fi
+done
+echo
+
 cat <<- 'EOT'
 # インターネットへの疎通がないときには終了
 ping -c 1 openwrt.org > /dev/null 2>&1
