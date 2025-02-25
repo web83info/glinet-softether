@@ -11,12 +11,29 @@ if [ -n "$WIRELESS_2G_ENABLE" ] && [ "$WIRELESS_2G_ENABLE" != 0 ]; then
 	uci del wireless.default_${radio_2g}
 	uci del wireless.${radio_2g}.disabled
 	uci set wireless.${radio_2g}.band=2g
-	uci set wireless.${radio_2g}.channel='$WIRELESS_2G_CHANNEL'
-	uci set wireless.${radio_2g}.channels='$WIRELESS_2G_CHANNELS'
-	uci set wireless.${radio_2g}.country='$WIRELESS_2G_COUNTRY'
+	EOT
+
+	if [ -n "$WIRELESS_2G_CHANNEL" ]; then
+		echo "uci set wireless.${radio_2g}.channel='$WIRELESS_2G_CHANNEL'"
+	fi
+
+	if [ -n "$WIRELESS_2G_CHANNELS" ]; then
+		echo "uci set wireless.${radio_2g}.channels='$WIRELESS_2G_CHANNELS'"
+	fi
+
+	if [ -n "$WIRELESS_2G_COUNTRY" ]; then
+		echo "uci set wireless.${radio_2g}.country='$WIRELESS_2G_COUNTRY'"
+	fi
+
+	if [ -n "$WIRELESS_2G_HTMODE" ]; then
+		echo "uci set wireless.${radio_2g}.htmode='$WIRELESS_2G_HTMODE'"
+	fi
+
+	cat <<- EOT
 	uci set wireless.${radio_2g}.cell_density='3'
 
 	EOT
+
 fi
 
 if [ -n "$WIRELESS_5G_ENABLE" ] && [ "$WIRELESS_5G_ENABLE" != 0 ]; then
@@ -28,12 +45,29 @@ if [ -n "$WIRELESS_5G_ENABLE" ] && [ "$WIRELESS_5G_ENABLE" != 0 ]; then
 	uci del wireless.default_${radio_5g}
 	uci del wireless.${radio_5g}.disabled
 	uci set wireless.${radio_5g}.band=5g
-	uci set wireless.${radio_5g}.channel='$WIRELESS_5G_CHANNEL'
-	uci set wireless.${radio_5g}.channels='$WIRELESS_5G_CHANNELS'
-	uci set wireless.${radio_5g}.country='$WIRELESS_5G_COUNTRY'
+	EOT
+
+	if [ -n "$WIRELESS_5G_CHANNEL" ]; then
+		echo "uci set wireless.${radio_5g}.channel='$WIRELESS_5G_CHANNEL'"
+	fi
+
+	if [ -n "$WIRELESS_5G_CHANNELS" ]; then
+		echo "uci set wireless.${radio_5g}.channels='$WIRELESS_5G_CHANNELS'"
+	fi
+
+	if [ -n "$WIRELESS_5G_COUNTRY" ]; then
+		echo "uci set wireless.${radio_5g}.country='$WIRELESS_5G_COUNTRY'"
+	fi
+
+	if [ -n "$WIRELESS_5G_HTMODE" ]; then
+		echo "uci set wireless.${radio_5g}.htmode='$WIRELESS_5G_HTMODE'"
+	fi
+
+	cat <<- EOT
 	uci set wireless.${radio_5g}.cell_density='3'
 
 	EOT
+
 fi
 
 # 各SSID
