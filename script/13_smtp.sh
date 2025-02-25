@@ -2,7 +2,7 @@
 
 echo '# 13.SMTP'
 
-if [ -n "$SMTP_ENABLE" ] && [ "$SMTP_ENABLE" != 0 ]; then
+if [ -n "$SMTP_INSTALL" ] && [ "$SMTP_INSTALL" != 0 ]; then
 	cat <<- EOT
 	# SMTPインストール
 	opkg install msmtp
