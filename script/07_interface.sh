@@ -10,6 +10,7 @@ do
 	vlann_ipaddr=VLAN${i}_IPADDR
 	vlann_netmask=VLAN${i}_NETMASK
 	vlann_gateway=VLAN${i}_GATEWAY
+	vlann_dns=VLAN${i}_DNS
 	vlann_zone=VLAN${i}_ZONE
 
 	if [ -n "${!vlann_name}" ]; then
@@ -22,6 +23,7 @@ do
 			uci set network.${!vlann_name}.netmask='${!vlann_netmask}'
 			uci set network.${!vlann_name}.gateway='${!vlann_gateway}'
 			uci set network.${!vlann_name}.device='br-vlantap.${!vlann_vid}'
+			uci add_list network.${!vlann_name}.dns='${!vlann_dns}'
 
 			EOT
 		else
