@@ -20,9 +20,7 @@ function convert_ethernet_name_switch_port() {
 	done;
 	# 末尾のスペースを削除
 	ports="${ports% }"
-	cat <<- EOT
-	uci set network.@switch_vlan[-1].ports='${ports}'
-	EOT
+	echo "uci set network.@switch_vlan[-1].ports='${ports}'"
 }
 
 echo '# 04.スイッチ'
@@ -38,7 +36,9 @@ if [ "$glinet_has_switch" != 0 ]; then
 		uci set network.@switch_vlan[0].vid='$VLAN_LAN_VID'
 		uci set network.@switch_vlan[0].description='$VLAN_LAN_NAME'
 		EOT
-		[ -n "$VLAN_LAN_PORTS" ] && convert_ethernet_name_switch_port "${VLAN_LAN_PORTS}"
+		if [ -n "$VLAN_LAN_PORTS" ]; then
+			convert_ethernet_name_switch_port "${VLAN_LAN_PORTS}"
+		fi
 		echo
 	fi
 
@@ -50,7 +50,9 @@ if [ "$glinet_has_switch" != 0 ]; then
 		uci set network.@switch_vlan[1].vid='$VLAN_WAN_VID'
 		uci set network.@switch_vlan[1].description='$VLAN_WAN_NAME'
 		EOT
-		[ -n "$VLAN_WAN_PORTS" ] && convert_ethernet_name_switch_port "${VLAN_WAN_PORTS}"
+		if [ -n "$VLAN_WAN_PORTS" ]; then
+			convert_ethernet_name_switch_port "${VLAN_WAN_PORTS}"
+		fi
 		echo
 	fi
 

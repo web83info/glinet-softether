@@ -25,9 +25,7 @@ if [ "$glinet_has_switch" != 0 ]; then
 			EOT
 
 			if [ -n "${!vlann_hub_to}" ]; then
-				cat <<- EOT
-				uci add_list network.@bridge-vlan[-1].ports='${tap_port}'
-				EOT
+				echo "uci add_list network.@bridge-vlan[-1].ports='${tap_port}'"
 			fi
 
 			cat <<- EOT
@@ -57,9 +55,7 @@ if [ "$glinet_has_switch" = 0 ]; then
 			each_port_name+=':t'
 		fi
 		if [ -n "${each_port_name}" ]; then
-			cat <<- EOT
-			uci add_list network.@bridge-vlan[-1].ports='${each_port_name}'
-			EOT
+			echo "uci add_list network.@bridge-vlan[-1].ports='${each_port_name}'"
 		fi
 	done;
 
@@ -97,9 +93,7 @@ if [ "$glinet_has_switch" = 0 ]; then
 			EOT
 
 			if [ -n "${!vlann_hub_to}" ]; then
-				cat <<- EOT
-				uci add_list network.@bridge-vlan[-1].ports='${tap_port}'
-				EOT
+				echo "uci add_list network.@bridge-vlan[-1].ports='${tap_port}'"
 			fi
 
 			for each_port in "${vlann_ports_name_each[@]}"; do
@@ -111,13 +105,10 @@ if [ "$glinet_has_switch" = 0 ]; then
 					each_port_name+=':t'
 				fi
 				if [ -n "${each_port_name}" ]; then
-					cat <<- EOT
-					uci add_list network.@bridge-vlan[-1].ports='${each_port_name}'
-					EOT
+					echo "uci add_list network.@bridge-vlan[-1].ports='${each_port_name}'"
 				fi
 			done;
 			echo
 		fi
 	done
 fi
-

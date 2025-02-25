@@ -28,7 +28,7 @@ if [ -n "$SMTP_INSTALL" ] && [ "$SMTP_INSTALL" != 0 ]; then
 	EOT
 
 	# エイリアス
-	if [ -n "$ROOT_EMAIL_TO" ] ; then
+	if [ -n "$ROOT_EMAIL_TO" ]; then
 		cat <<- EOT
 		# sendmailとして使えるようにシンボリックリンク
 		ln -s /usr/bin/msmtp /usr/sbin/sendmail

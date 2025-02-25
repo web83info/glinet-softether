@@ -10,9 +10,7 @@ for i in $(seq 1 9)
 do
 	command_aftern=COMMAND_AFTER${i}
 	if [ -n "${!command_aftern}" ]; then
-		cat <<- EOT
-		${!command_aftern}
-		EOT
+		echo ${!command_aftern}
 	fi
 done
 echo

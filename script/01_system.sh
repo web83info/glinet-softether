@@ -24,9 +24,7 @@ for i in $(seq 1 9)
 do
 	command_beforen=COMMAND_BEFORE${i}
 	if [ -n "${!command_beforen}" ]; then
-		cat <<- EOT
-		${!command_beforen}
-		EOT
+		echo ${!command_beforen}
 	fi
 done
 echo
@@ -44,13 +42,11 @@ echo 'export PS1='\''\[\e[1;31m\]\u@\h:\w\$ \[\e[0m\]\'\' >> /etc/profile
 
 EOT
 
-if [ -n "$SYSTEM_ROOT_PASSWORD" ] ;then
+if [ -n "$SYSTEM_ROOT_PASSWORD" ]; then
 	echo '# rootパスワード'
 
 	if [ "$GLINET_FIRMWARE" = 'Vanilla' ]; then
-		cat <<- EOT
-		echo -e "$SYSTEM_ROOT_PASSWORD\n$SYSTEM_ROOT_PASSWORD" | (passwd root)
-		EOT
+		echo "echo -e \"$SYSTEM_ROOT_PASSWORD\n$SYSTEM_ROOT_PASSWORD\" | (passwd root)"
 	fi
 
 	if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
@@ -61,7 +57,7 @@ if [ -n "$SYSTEM_ROOT_PASSWORD" ] ;then
 	echo
 fi
 
-if [ -n "$SYSTEM_LANGUAGE" ] ;then
+if [ -n "$SYSTEM_LANGUAGE" ]; then
 	cat <<- EOT
 	# システム言語
 	uci set luci.main.lang=$SYSTEM_LANGUAGE
@@ -72,12 +68,14 @@ if [ -n "$SYSTEM_LANGUAGE" ] ;then
 	echo
 fi
 
-[ -n "$SYSTEM_LAN_IP" ] && cat <<- EOT
-# インターフェース "lan"
-# デフォルトIPアドレス変更
-uci set network.lan.ipaddr='$SYSTEM_LAN_IP'
-uci set dhcp.lan.ignore='1'
-EOT
+if [ -n "$SYSTEM_LAN_IP" ]; then
+	cat <<- EOT
+	# インターフェース "lan"
+	# デフォルトIPアドレス変更
+	uci set network.lan.ipaddr='$SYSTEM_LAN_IP'
+	uci set dhcp.lan.ignore='1'
+	EOT
+fi
 
 cat <<- EOT
 uci del network.@device[0].ports
@@ -95,47 +93,55 @@ uci del dhcp.lan.dhcpv6
 
 EOT
 
-[ -n "$SYSTEM_ADMIN_IP" ] && cat <<- EOT
-# デバイス "br-admin" 作成
-uci add network device
-uci set network.@device[-1].type='bridge'
-uci set network.@device[-1].name='br-admin'
-uci add_list network.@device[-1].ports='$glinet_interface_admin'
+if [ -n "$SYSTEM_ADMIN_IP" ]; then
+	cat <<- EOT
+	# デバイス "br-admin" 作成
+	uci add network device
+	uci set network.@device[-1].type='bridge'
+	uci set network.@device[-1].name='br-admin'
+	uci add_list network.@device[-1].ports='$glinet_interface_admin'
 
-# インターフェース "admin" 作成
-uci set network.admin=interface
-uci set network.admin.device='br-admin'
-uci set network.admin.proto='static'
-uci set network.admin.ipaddr='$SYSTEM_ADMIN_IP'
-uci set network.admin.netmask='255.255.255.0'
+	# インターフェース "admin" 作成
+	uci set network.admin=interface
+	uci set network.admin.device='br-admin'
+	uci set network.admin.proto='static'
+	uci set network.admin.ipaddr='$SYSTEM_ADMIN_IP'
+	uci set network.admin.netmask='255.255.255.0'
 
-uci add_list firewall.@zone[0].network='admin'
+	uci add_list firewall.@zone[0].network='admin'
 
-uci set dhcp.admin=dhcp
-uci set dhcp.admin.interface='admin'
-uci set dhcp.admin.start='100'
-uci set dhcp.admin.limit='150'
-uci set dhcp.admin.leasetime='12h'
+	uci set dhcp.admin=dhcp
+	uci set dhcp.admin.interface='admin'
+	uci set dhcp.admin.start='100'
+	uci set dhcp.admin.limit='150'
+	uci set dhcp.admin.leasetime='12h'
 
-EOT
+	EOT
+fi
 
-[ -n "$SYSTEM_HOSTNAME" ] && cat <<- EOT
-# ホスト名
-uci set system.@system[0].hostname=$SYSTEM_HOSTNAME
+if [ -n "$SYSTEM_HOSTNAME" ]; then
+	cat <<- EOT
+	# ホスト名
+	uci set system.@system[0].hostname=$SYSTEM_HOSTNAME
 
-EOT
+	EOT
+fi
 
-[ -n "$SYSTEM_ZONENAME" ] && cat <<- EOT
-# タイムゾーン名
-uci set system.@system[0].zonename=$SYSTEM_ZONENAME
+if [ -n "$SYSTEM_ZONENAME" ]; then
+	cat <<- EOT
+	# タイムゾーン名
+	uci set system.@system[0].zonename=$SYSTEM_ZONENAME
 
-EOT
+	EOT
+fi
 
-[ -n "$SYSTEM_TIMEZONE" ] && cat <<- EOT
-# タイムゾーン
-uci set system.@system[0].timezone=$SYSTEM_TIMEZONE
+if [ -n "$SYSTEM_TIMEZONE" ]; then
+	cat <<- EOT
+	# タイムゾーン
+	uci set system.@system[0].timezone=$SYSTEM_TIMEZONE
 
-EOT
+	EOT
+fi
 
 if [ -n "$SYSTEM_NTP_SERVER" ]; then
 	cat <<- 'EOT'

@@ -15,7 +15,6 @@ do
 	if [ -n "${!vlann_name}" ]; then
 
 		if [ "${!vlann_proto}" = 'static' ]; then
-
 			cat <<- EOT
 			uci set network.${!vlann_name}=interface
 			uci set network.${!vlann_name}.proto='${!vlann_proto}'
@@ -25,38 +24,28 @@ do
 			uci set network.${!vlann_name}.device='br-vlantap.${!vlann_vid}'
 
 			EOT
-
 		else
-
 			cat <<- EOT
 			uci set network.${!vlann_name}=interface
 			uci set network.${!vlann_name}.proto='none'
 			uci set network.${!vlann_name}.device='br-vlantap.${!vlann_vid}'
 
 			EOT
-
 		fi
 
 		if [ -n "${!vlann_zone}" ]; then
-
 			if [ "${!vlann_zone}" = 'lan' ]; then
-
 				cat <<- EOT
 				uci add_list firewall.@zone[0].network='${!vlann_name}'
 
 				EOT
-
 			else
-
 				cat <<- EOT
 				uci add_list firewall.${!vlann_zone}.network='${!vlann_name}'
 
 				EOT
-
 			fi
-
 		fi
-
 	fi
 done
 cat <<- 'EOT'
