@@ -12,6 +12,11 @@ if [ -z "$GLINET_FIRMWARE" ]; then
 	GLINET_FIRMWARE=Stock
 fi
 
+# インターフェース "admin" DHCPサーバ（既定値：1=使用する）
+if [ -z "$SYSTEM_ADMIN_DHCP_ENABLE" ]; then
+	SYSTEM_ADMIN_DHCP_ENABLE=1
+fi
+
 # SoftEtherインストール（既定値：1=Yes）
 if [ -z "$SOFTETHER_INSTALL" ]; then
 	SOFTETHER_INSTALL=1

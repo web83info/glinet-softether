@@ -106,10 +106,34 @@ if [ -n "$SYSTEM_ADMIN_IPADDR" ]; then
 	uci set network.admin.device='br-admin'
 	uci set network.admin.proto='static'
 	uci set network.admin.ipaddr='$SYSTEM_ADMIN_IPADDR'
-	uci set network.admin.netmask='255.255.255.0'
+	uci set network.admin.netmask='$SYSTEM_ADMIN_NETMASK'
+	EOT
+fi
 
+if [ -n "$SYSTEM_ADMIN_GATEWAY" ]; then
+	cat <<- EOT
+	uci set network.admin.gateway='$SYSTEM_ADMIN_GATEWAY'
+	EOT
+fi
+
+if [ -n "$SYSTEM_ADMIN_DNS" ]; then
+	cat <<- EOT
+	uci add_list network.admin.dns='$SYSTEM_ADMIN_DNS'
+	EOT
+fi
+
+echo
+
+if [ -n "$SYSTEM_ADMIN_IPADDR" ]; then
+	cat <<- EOT
 	uci add_list firewall.@zone[0].network='admin'
 
+	EOT
+fi
+
+if [ "$SYSTEM_ADMIN_DHCP_ENABLE" != 0 ]; then
+
+	cat <<- EOT
 	uci set dhcp.admin=dhcp
 	uci set dhcp.admin.interface='admin'
 	uci set dhcp.admin.start='100'
@@ -118,6 +142,7 @@ if [ -n "$SYSTEM_ADMIN_IPADDR" ]; then
 
 	EOT
 fi
+
 
 if [ -n "$SYSTEM_HOSTNAME" ]; then
 	cat <<- EOT
