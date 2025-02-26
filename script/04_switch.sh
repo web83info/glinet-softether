@@ -67,6 +67,24 @@ if [ "$glinet_has_switch" != 0 ]; then
 		EOT
 	fi
 
+	if [ -n "$VLAN_WAN_ZONE" ]; then
+		if [ "$VLAN_WAN_ZONE" = 'lan' ]; then
+			cat <<- EOT
+			uci add_list firewall.@zone[0].network='wan'
+			uci add_list firewall.@zone[0].network='wan6'
+			uci del_list firewall.@zone[1].network='wan'
+			uci del_list firewall.@zone[1].network='wan6'
+
+			EOT
+		else
+			cat <<- EOT
+			uci add_list firewall.$VLAN_WAN_ZONE.network='wan'
+			uci add_list firewall.$VLAN_WAN_ZONE.network='wan6'
+
+			EOT
+		fi
+	fi
+
 	# 各VLAN
 	for i in $(seq 1 $vlan_max)
 	do
@@ -102,4 +120,22 @@ if [ "$glinet_has_switch" = 0 ]; then
 		EOT
 	fi
 	echo
+
+	if [ -n "$VLAN_WAN_ZONE" ]; then
+		if [ "$VLAN_WAN_ZONE" = 'lan' ]; then
+			cat <<- EOT
+			uci add_list firewall.@zone[0].network='wan'
+			uci add_list firewall.@zone[0].network='wan6'
+			uci del_list firewall.@zone[1].network='wan'
+			uci del_list firewall.@zone[1].network='wan6'
+
+			EOT
+		else
+			cat <<- EOT
+			uci add_list firewall.$VLAN_WAN_ZONE.network='wan'
+			uci add_list firewall.$VLAN_WAN_ZONE.network='wan6'
+
+			EOT
+		fi
+	fi
 fi
