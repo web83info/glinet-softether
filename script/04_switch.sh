@@ -56,6 +56,17 @@ if [ "$glinet_has_switch" != 0 ]; then
 		echo
 	fi
 
+	if [ "$VLAN_WAN_PROTO" = 'static' ]; then
+		cat <<- EOT
+		uci set network.@switch_vlan[1].proto='$VLAN_WAN_PROTO'
+		uci set network.@switch_vlan[1].ipaddr='$VLAN_WAN_IPADDR'
+		uci set network.@switch_vlan[1].netmask='$VLAN_WAN_NETMASK'
+		uci set network.@switch_vlan[1].gateway='$VLAN_WAN_GATEWAY'
+		uci add_list network.@switch_vlan[1].dns='$VLAN_WAN_DNS'
+
+		EOT
+	fi
+
 	# 各VLAN
 	for i in $(seq 1 $vlan_max)
 	do
@@ -80,5 +91,15 @@ fi
 
 # スイッチなし
 if [ "$glinet_has_switch" = 0 ]; then
+	if [ "$VLAN_WAN_PROTO" = 'static' ]; then
+		cat <<- EOT
+		uci set network.wan.proto='$VLAN_WAN_PROTO'
+		uci set network.wan.ipaddr='$VLAN_WAN_IPADDR'
+		uci set network.wan='$VLAN_WAN_NETMASK'
+		uci set network.wan.gateway='$VLAN_WAN_GATEWAY'
+		uci add_list network.wan.dns='$VLAN_WAN_DNS'
+
+		EOT
+	fi
 	echo
 fi
