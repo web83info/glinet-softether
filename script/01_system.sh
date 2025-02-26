@@ -68,11 +68,11 @@ if [ -n "$SYSTEM_LANGUAGE" ]; then
 	echo
 fi
 
-if [ -n "$SYSTEM_LAN_IP" ]; then
+if [ -n "$SYSTEM_LAN_IPADDR" ]; then
 	cat <<- EOT
 	# インターフェース "lan"
 	# デフォルトIPアドレス変更
-	uci set network.lan.ipaddr='$SYSTEM_LAN_IP'
+	uci set network.lan.ipaddr='$SYSTEM_LAN_IPADDR'
 	uci set dhcp.lan.ignore='1'
 	EOT
 fi
@@ -93,7 +93,7 @@ uci del dhcp.lan.dhcpv6
 
 EOT
 
-if [ -n "$SYSTEM_ADMIN_IP" ]; then
+if [ -n "$SYSTEM_ADMIN_IPADDR" ]; then
 	cat <<- EOT
 	# デバイス "br-admin" 作成
 	uci add network device
@@ -105,7 +105,7 @@ if [ -n "$SYSTEM_ADMIN_IP" ]; then
 	uci set network.admin=interface
 	uci set network.admin.device='br-admin'
 	uci set network.admin.proto='static'
-	uci set network.admin.ipaddr='$SYSTEM_ADMIN_IP'
+	uci set network.admin.ipaddr='$SYSTEM_ADMIN_IPADDR'
 	uci set network.admin.netmask='255.255.255.0'
 
 	uci add_list firewall.@zone[0].network='admin'
