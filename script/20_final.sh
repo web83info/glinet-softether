@@ -13,6 +13,7 @@ do
 		echo ${!command_aftern}
 	fi
 done
+
 echo
 
 cat <<- EOT

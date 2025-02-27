@@ -50,7 +50,8 @@ if [ "$SOFTETHER_INSTALL" != 0 ]; then
 	# SoftEtherコンフィグファイルをバックアップの対象にする
 	echo '/usr/libexec/softethervpn/lang.config' >> /etc/sysupgrade.conf
 	echo '/usr/libexec/softethervpn/vpn_server.config' >> /etc/sysupgrade.conf
-
 	EOT
 
 fi
+
+echo

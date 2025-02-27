@@ -13,6 +13,7 @@ if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
 	cat > /usr/lib/lua/luci/view/glinet.htm << EOF
 	$(<include/_usr_lib_lua_luci_view_glinet.htm)
 	EOF
-
 	EOT
 fi
+
+echo

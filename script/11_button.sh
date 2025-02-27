@@ -43,7 +43,6 @@ function button_wifi_on_off() {
 	cat >> /etc/profile << 'EOF'
 	$script_profile
 	EOF
-
 	EOT
 
 }
@@ -61,3 +60,5 @@ fi
 if [ "$GLINET_MODEL" = 'Beryl' ] && [ "$GLINET_FIRMWARE" = 'Stock' ]; then
 	button_wifi_on_off
 fi
+
+echo
