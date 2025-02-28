@@ -109,7 +109,7 @@ if [ "$GLINET_MODEL" = 'Creta' ]; then
 	wireless_radio0_name=radio0
 	wireless_radio1_name=radio1
 	wireless_2g_name=radio1
-	wireless_5g_name=radio0
+	wireless_5g1_name=radio0
 fi
 
 if [ "$GLINET_MODEL" = 'Slate' ]; then
@@ -136,7 +136,7 @@ if [ "$GLINET_MODEL" = 'Slate' ]; then
 	wireless_radio0_name=radio0
 	wireless_radio1_name=radio1
 	wireless_2g_name=radio1
-	wireless_5g_name=radio0
+	wireless_5g1_name=radio0
 fi
 
 if [ "$GLINET_MODEL" = 'Opal' ]; then
@@ -163,7 +163,7 @@ if [ "$GLINET_MODEL" = 'Opal' ]; then
 	wireless_radio0_name=radio0
 	wireless_radio1_name=radio1
 	wireless_2g_name=radio0
-	wireless_5g_name=radio1
+	wireless_5g1_name=radio1
 fi
 
 if [ "$GLINET_MODEL" = 'Beryl' ]; then
@@ -185,7 +185,7 @@ if [ "$GLINET_MODEL" = 'Beryl' ]; then
 	wireless_radio0_name=radio0
 	wireless_radio1_name=radio1
 	wireless_2g_name=radio0
-	wireless_5g_name=radio1
+	wireless_5g1_name=radio1
 fi
 
 if [ "$GLINET_MODEL" = 'Convex' ]; then
@@ -206,7 +206,7 @@ if [ "$GLINET_MODEL" = 'Convex' ]; then
 		wireless_radio0_name=radio0
 		wireless_radio1_name=radio1
 		wireless_2g_name=radio0
-		wireless_5g_name=radio1
+		wireless_5g1_name=radio1
 	fi
 
 	# if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
@@ -248,7 +248,7 @@ if [ "$GLINET_MODEL" = 'SlateAX' ]; then
 	wireless_radio0_name=radio0
 	wireless_radio1_name=radio1
 	wireless_2g_name=radio1
-	wireless_5g_name=radio0
+	wireless_5g1_name=radio0
 fi
 
 if [ "$GLINET_MODEL" = 'AC1304' ]; then
@@ -266,7 +266,7 @@ if [ "$GLINET_MODEL" = 'AC1304' ]; then
 	wireless_radio0_name=radio0
 	wireless_radio1_name=radio1
 	wireless_2g_name=radio0
-	wireless_5g_name=radio1
+	wireless_5g1_name=radio1
 fi
 
 if [ "$GLINET_MODEL" = 'ERX' ]; then
@@ -309,7 +309,7 @@ if [ "$GLINET_MODEL" = 'WABI1750PS' ]; then
 	wireless_radio0_name=radio0
 	wireless_radio1_name=radio1
 	wireless_2g_name=radio1
-	wireless_5g_name=radio0
+	wireless_5g1_name=radio0
 fi
 
 if [ "$GLINET_MODEL" = 'WHW03' ]; then
@@ -328,8 +328,8 @@ if [ "$GLINET_MODEL" = 'WHW03' ]; then
 	wireless_radio1_name=radio1
 	wireless_radio2_name=radio2 # ch 36~
 	wireless_2g_name=radio1
-	wireless_5g_name=radio2
-	wireless_5g_another_name=radio0
+	wireless_5g1_name=radio2
+	wireless_5g2_name=radio0
 fi
 
 # スペース区切りの文字列を分割し、複数行で処理するためのサブルーチン

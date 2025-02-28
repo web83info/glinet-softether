@@ -36,35 +36,35 @@ if [ -n "$WIRELESS_2G_ENABLE" ] && [ "$WIRELESS_2G_ENABLE" != 0 ]; then
 
 fi
 
-if [ -n "$WIRELESS_5G_ENABLE" ] && [ "$WIRELESS_5G_ENABLE" != 0 ]; then
+if [ -n "$WIRELESS_5G1_ENABLE" ] && [ "$WIRELESS_5G1_ENABLE" != 0 ]; then
 	# 5GHz基本設定
-	radio_5g_name=wireless_${wireless_5g_name}_name
-	radio_5g=${!radio_5g_name}
+	radio_5g1_name=wireless_${wireless_5g1_name}_name
+	radio_5g1=${!radio_5g1_name}
 	cat <<- EOT
 	# 5GHz基本設定
-	uci del wireless.default_${radio_5g}
-	uci del wireless.${radio_5g}.disabled
-	uci set wireless.${radio_5g}.band=5g
+	uci del wireless.default_${radio_5g1}
+	uci del wireless.${radio_5g1}.disabled
+	uci set wireless.${radio_5g1}.band=5g
 	EOT
 
-	if [ -n "$WIRELESS_5G_CHANNEL" ]; then
-		echo "uci set wireless.${radio_5g}.channel='$WIRELESS_5G_CHANNEL'"
+	if [ -n "$WIRELESS_5G1_CHANNEL" ]; then
+		echo "uci set wireless.${radio_5g1}.channel='$WIRELESS_5G1_CHANNEL'"
 	fi
 
-	if [ -n "$WIRELESS_5G_CHANNELS" ]; then
-		echo "uci set wireless.${radio_5g}.channels='$WIRELESS_5G_CHANNELS'"
+	if [ -n "$WIRELESS_5G1_CHANNELS" ]; then
+		echo "uci set wireless.${radio_5g1}.channels='$WIRELESS_5G1_CHANNELS'"
 	fi
 
-	if [ -n "$WIRELESS_5G_COUNTRY" ]; then
-		echo "uci set wireless.${radio_5g}.country='$WIRELESS_5G_COUNTRY'"
+	if [ -n "$WIRELESS_5G1_COUNTRY" ]; then
+		echo "uci set wireless.${radio_5g1}.country='$WIRELESS_5G1_COUNTRY'"
 	fi
 
-	if [ -n "$WIRELESS_5G_HTMODE" ]; then
-		echo "uci set wireless.${radio_5g}.htmode='$WIRELESS_5G_HTMODE'"
+	if [ -n "$WIRELESS_5G1_HTMODE" ]; then
+		echo "uci set wireless.${radio_5g1}.htmode='$WIRELESS_5G1_HTMODE'"
 	fi
 
 	cat <<- EOT
-	uci set wireless.${radio_5g}.cell_density='3'
+	uci set wireless.${radio_5g1}.cell_density='3'
 
 	EOT
 
@@ -78,8 +78,8 @@ do
 	if [ "${!wireless_wifin_radio}" = 2G ]; then
 		wireless_wifin_radio=${radio_2g}
 	fi
-	if [ "${!wireless_wifin_radio}" = 5G ]; then
-		wireless_wifin_radio=${radio_5g}
+	if [ "${!wireless_wifin_radio}" = 5G1 ]; then
+		wireless_wifin_radio=${radio_5g1}
 	fi
 	wireless_wifin_ssid=WIRELESS_WIFI${i}_SSID
 	wireless_wifin_encryption=WIRELESS_WIFI${i}_ENCRYPTION
