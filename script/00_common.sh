@@ -208,11 +208,6 @@ if [ "$GLINET_MODEL" = 'Convex' ]; then
 		wireless_2g_name=radio0
 		wireless_5g1_name=radio1
 	fi
-
-	# if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
-	#     # 未対応
-	# fi
-
 fi
 
 if [ "$GLINET_MODEL" = 'Brume' ]; then
