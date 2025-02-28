@@ -324,9 +324,9 @@ if [ "$GLINET_MODEL" = 'WHW03' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_radio0_name=radio0
+	wireless_radio0_name=radio0 # ch 100~
 	wireless_radio1_name=radio1
-	wireless_radio2_name=radio2
+	wireless_radio2_name=radio2 # ch 36~
 	wireless_2g_name=radio1
 	wireless_5g_name=radio2
 	wireless_5g_another_name=radio0
