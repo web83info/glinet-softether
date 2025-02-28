@@ -37,11 +37,11 @@ if [ -n "$WIRELESS_2G_ENABLE" ] && [ "$WIRELESS_2G_ENABLE" != 0 ]; then
 fi
 
 if [ -n "$WIRELESS_5G1_ENABLE" ] && [ "$WIRELESS_5G1_ENABLE" != 0 ]; then
-	# 5GHz基本設定
+	# 5GHz(1) 基本設定
 	radio_5g1_name=wireless_${wireless_5g1_name}_name
 	radio_5g1=${!radio_5g1_name}
 	cat <<- EOT
-	# 5GHz基本設定
+	# 5GHz(1) 基本設定
 	uci del wireless.default_${radio_5g1}
 	uci del wireless.${radio_5g1}.disabled
 	uci set wireless.${radio_5g1}.band=5g
@@ -70,6 +70,40 @@ if [ -n "$WIRELESS_5G1_ENABLE" ] && [ "$WIRELESS_5G1_ENABLE" != 0 ]; then
 
 fi
 
+if [ -n "$WIRELESS_5G2_ENABLE" ] && [ "$WIRELESS_5G2_ENABLE" != 0 ]; then
+	# 5GHz(2) 基本設定
+	radio_5g2_name=wireless_${wireless_5g2_name}_name
+	radio_5g2=${!radio_5g2_name}
+	cat <<- EOT
+	# 5GHz(1) 基本設定
+	uci del wireless.default_${radio_5g2}
+	uci del wireless.${radio_5g2}.disabled
+	uci set wireless.${radio_5g2}.band=5g
+	EOT
+
+	if [ -n "$WIRELESS_5G2_CHANNEL" ]; then
+		echo "uci set wireless.${radio_5g2}.channel='$WIRELESS_5G2_CHANNEL'"
+	fi
+
+	if [ -n "$WIRELESS_5G2_CHANNELS" ]; then
+		echo "uci set wireless.${radio_5g2}.channels='$WIRELESS_5G2_CHANNELS'"
+	fi
+
+	if [ -n "$WIRELESS_5G2_COUNTRY" ]; then
+		echo "uci set wireless.${radio_5g2}.country='$WIRELESS_5G2_COUNTRY'"
+	fi
+
+	if [ -n "$WIRELESS_5G2_HTMODE" ]; then
+		echo "uci set wireless.${radio_5g2}.htmode='$WIRELESS_5G2_HTMODE'"
+	fi
+
+	cat <<- EOT
+	uci set wireless.${radio_5g2}.cell_density='3'
+
+	EOT
+
+fi
+
 # 各SSID
 for i in $(seq 1 $wifi_ssid_max)
 do
@@ -80,6 +114,9 @@ do
 	fi
 	if [ "${!wireless_wifin_radio}" = 5G1 ]; then
 		wireless_wifin_radio=${radio_5g1}
+	fi
+	if [ "${!wireless_wifin_radio}" = 5G2 ]; then
+		wireless_wifin_radio=${radio_5g2}
 	fi
 	wireless_wifin_ssid=WIRELESS_WIFI${i}_SSID
 	wireless_wifin_encryption=WIRELESS_WIFI${i}_ENCRYPTION
