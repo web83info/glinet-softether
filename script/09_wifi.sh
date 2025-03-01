@@ -75,7 +75,7 @@ if [ -n "$WIRELESS_5G2_ENABLE" ] && [ "$WIRELESS_5G2_ENABLE" != 0 ]; then
 	radio_5g2_name=wireless_${wireless_5g2_name}_name
 	radio_5g2=${!radio_5g2_name}
 	cat <<- EOT
-	# 5GHz(1) 基本設定
+	# 5GHz(2) 基本設定
 	uci del wireless.default_${radio_5g2}
 	uci del wireless.${radio_5g2}.disabled
 	uci set wireless.${radio_5g2}.band=5g
