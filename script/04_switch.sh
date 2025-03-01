@@ -29,7 +29,7 @@ echo '# 04.スイッチ'
 if [ "$glinet_has_switch" != 0 ]; then
 
 	# VLAN LAN
-	if [ -n "$VLAN_LAN_NAME" ]; then
+	if [ "$VLAN_LAN_NAME" ]; then
 		cat <<- EOT
 		# VLAN LAN
 		uci set network.@switch_vlan[0].vlan='$VLAN_LAN_VID'
@@ -43,7 +43,7 @@ if [ "$glinet_has_switch" != 0 ]; then
 	fi
 
 	# VLAN WAN
-	if [ -n "$VLAN_WAN_NAME" ]; then
+	if [ "$VLAN_WAN_NAME" ]; then
 		cat <<- EOT
 		# VLAN WAN
 		uci set network.@switch_vlan[1].vlan='$VLAN_WAN_VID'
@@ -67,7 +67,7 @@ if [ "$glinet_has_switch" != 0 ]; then
 		EOT
 	fi
 
-	if [ -n "$VLAN_WAN_ZONE" ]; then
+	if [ "$VLAN_WAN_ZONE" ]; then
 		if [ "$VLAN_WAN_ZONE" = 'lan' ]; then
 			cat <<- EOT
 			uci add_list firewall.@zone[0].network='wan'
@@ -121,7 +121,7 @@ if [ "$glinet_has_switch" = 0 ]; then
 	fi
 	echo
 
-	if [ -n "$VLAN_WAN_ZONE" ]; then
+	if [ "$VLAN_WAN_ZONE" ]; then
 		if [ "$VLAN_WAN_ZONE" = 'lan' ]; then
 			cat <<- EOT
 			uci add_list firewall.@zone[0].network='wan'

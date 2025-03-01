@@ -42,7 +42,7 @@ echo 'export PS1='\''\[\e[1;31m\]\u@\h:\w\$ \[\e[0m\]\'\' >> /etc/profile
 
 EOT
 
-if [ -n "$SYSTEM_ROOT_PASSWORD" ]; then
+if [ "$SYSTEM_ROOT_PASSWORD" ]; then
 	echo '# rootパスワード'
 
 	if [ "$GLINET_FIRMWARE" = 'Vanilla' ]; then
@@ -57,7 +57,7 @@ if [ -n "$SYSTEM_ROOT_PASSWORD" ]; then
 	echo
 fi
 
-if [ -n "$SYSTEM_LANGUAGE" ]; then
+if [ "$SYSTEM_LANGUAGE" ]; then
 	cat <<- EOT
 	# システム言語
 	uci set luci.main.lang=$SYSTEM_LANGUAGE
@@ -68,7 +68,7 @@ if [ -n "$SYSTEM_LANGUAGE" ]; then
 	echo
 fi
 
-if [ -n "$SYSTEM_LAN_IPADDR" ]; then
+if [ "$SYSTEM_LAN_IPADDR" ]; then
 	cat <<- EOT
 	# インターフェース "lan"
 	# デフォルトIPアドレス変更
@@ -93,7 +93,7 @@ uci del dhcp.lan.dhcpv6
 
 EOT
 
-if [ -n "$SYSTEM_ADMIN_IPADDR" ]; then
+if [ "$SYSTEM_ADMIN_IPADDR" ]; then
 	cat <<- EOT
 	# デバイス "br-admin" 作成
 	uci add network device
@@ -110,13 +110,13 @@ if [ -n "$SYSTEM_ADMIN_IPADDR" ]; then
 	EOT
 fi
 
-if [ -n "$SYSTEM_ADMIN_GATEWAY" ]; then
+if [ "$SYSTEM_ADMIN_GATEWAY" ]; then
 	cat <<- EOT
 	uci set network.admin.gateway='$SYSTEM_ADMIN_GATEWAY'
 	EOT
 fi
 
-if [ -n "$SYSTEM_ADMIN_DNS" ]; then
+if [ "$SYSTEM_ADMIN_DNS" ]; then
 	cat <<- EOT
 	uci add_list network.admin.dns='$SYSTEM_ADMIN_DNS'
 	EOT
@@ -124,7 +124,7 @@ fi
 
 echo
 
-if [ -n "$SYSTEM_ADMIN_IPADDR" ]; then
+if [ "$SYSTEM_ADMIN_IPADDR" ]; then
 	cat <<- EOT
 	uci add_list firewall.@zone[0].network='admin'
 
@@ -144,7 +144,7 @@ if [ "$SYSTEM_ADMIN_DHCP_ENABLE" != 0 ]; then
 fi
 
 
-if [ -n "$SYSTEM_HOSTNAME" ]; then
+if [ "$SYSTEM_HOSTNAME" ]; then
 	cat <<- EOT
 	# ホスト名
 	uci set system.@system[0].hostname=$SYSTEM_HOSTNAME
@@ -152,7 +152,7 @@ if [ -n "$SYSTEM_HOSTNAME" ]; then
 	EOT
 fi
 
-if [ -n "$SYSTEM_ZONENAME" ]; then
+if [ "$SYSTEM_ZONENAME" ]; then
 	cat <<- EOT
 	# タイムゾーン名
 	uci set system.@system[0].zonename=$SYSTEM_ZONENAME
@@ -160,7 +160,7 @@ if [ -n "$SYSTEM_ZONENAME" ]; then
 	EOT
 fi
 
-if [ -n "$SYSTEM_TIMEZONE" ]; then
+if [ "$SYSTEM_TIMEZONE" ]; then
 	cat <<- EOT
 	# タイムゾーン
 	uci set system.@system[0].timezone=$SYSTEM_TIMEZONE
@@ -168,7 +168,7 @@ if [ -n "$SYSTEM_TIMEZONE" ]; then
 	EOT
 fi
 
-if [ -n "$SYSTEM_NTP_SERVER" ]; then
+if [ "$SYSTEM_NTP_SERVER" ]; then
 	cat <<- 'EOT'
 	# NTPサーバ
 	uci delete system.ntp.server
@@ -177,7 +177,7 @@ if [ -n "$SYSTEM_NTP_SERVER" ]; then
 	echo
 fi
 
-if [ -n "$SSH_PUBKEY" ]; then
+if [ "$SSH_PUBKEY" ]; then
 	cat <<- EOT
 	# SSH公開鍵
 	echo '$SSH_PUBKEY' > /etc/dropbear/authorized_keys

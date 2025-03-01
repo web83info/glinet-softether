@@ -2,7 +2,7 @@
 
 echo '# 13.SMTP'
 
-if [ -n "$SMTP_INSTALL" ] && [ "$SMTP_INSTALL" != 0 ]; then
+if [ "$SMTP_INSTALL" ] && [ "$SMTP_INSTALL" != 0 ]; then
 	cat <<- EOT
 	# SMTPインストール
 	opkg install msmtp
@@ -28,7 +28,7 @@ if [ -n "$SMTP_INSTALL" ] && [ "$SMTP_INSTALL" != 0 ]; then
 	EOT
 
 	# エイリアス
-	if [ -n "$ROOT_EMAIL_TO" ]; then
+	if [ "$ROOT_EMAIL_TO" ]; then
 		cat <<- EOT
 		# sendmailとして使えるようにシンボリックリンク
 		ln -s /usr/bin/msmtp /usr/sbin/sendmail

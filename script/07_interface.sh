@@ -13,7 +13,7 @@ do
 	vlann_dns=VLAN${i}_DNS
 	vlann_zone=VLAN${i}_ZONE
 
-	if [ -n "${!vlann_name}" ]; then
+	if [ "${!vlann_name}" ]; then
 
 		if [ "${!vlann_proto}" = 'static' ]; then
 			cat <<- EOT

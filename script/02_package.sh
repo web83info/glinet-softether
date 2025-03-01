@@ -58,7 +58,7 @@ uci delete ttyd.@ttyd[0].interface
 
 EOT
 
-if [ -n "$PACKAGE_EXTRA" ]; then
+if [ "$PACKAGE_EXTRA" ]; then
 	cat <<- EOT
 	# 追加パッケージ
 	opkg install $PACKAGE_EXTRA
