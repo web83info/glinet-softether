@@ -118,21 +118,40 @@ do
 	if [ "${!wireless_wifin_radio}" = 5G2 ]; then
 		wireless_wifin_radio=${radio_5g2}
 	fi
+	wireless_wifin_mode=WIRELESS_WIFI${i}_MODE
 	wireless_wifin_ssid=WIRELESS_WIFI${i}_SSID
 	wireless_wifin_encryption=WIRELESS_WIFI${i}_ENCRYPTION
 	wireless_wifin_key=WIRELESS_WIFI${i}_KEY
 	wireless_wifin_interface=WIRELESS_WIFI${i}_INTERFACE
 	if [ -n "${!wireless_wifin_name}" ]; then
-		cat <<- EOT
-		uci set wireless.${!wireless_wifin_name}=wifi-iface
-		uci set wireless.${!wireless_wifin_name}.device='${wireless_wifin_radio}'
-		uci set wireless.${!wireless_wifin_name}.mode='ap'
-		uci set wireless.${!wireless_wifin_name}.ssid='${!wireless_wifin_ssid}'
-		uci set wireless.${!wireless_wifin_name}.encryption='${!wireless_wifin_encryption}'
-		uci set wireless.${!wireless_wifin_name}.key='${!wireless_wifin_key}'
-		uci set wireless.${!wireless_wifin_name}.network='${!wireless_wifin_interface}'
 
-		EOT
+		echo "uci set wireless.${!wireless_wifin_name}=wifi-iface"
+
+		if [ -n "$wireless_wifin_radio" ]; then
+			echo "uci set wireless.${!wireless_wifin_name}.device='${wireless_wifin_radio}'"
+		fi
+
+		if [ -n "$wireless_wifin_mode" ]; then
+			echo "uci set wireless.${!wireless_wifin_name}.mode='${!wireless_wifin_mode}'"
+		fi
+
+		if [ -n "$" ]; then
+			echo "uci set wireless.${!wireless_wifin_name}.ssid='${!wireless_wifin_ssid}'"
+		fi
+
+		if [ -n "$" ]; then
+			echo "uci set wireless.${!wireless_wifin_name}.encryption='${!wireless_wifin_encryption}'"
+		fi
+
+		if [ -n "$" ]; then
+			echo "uci set wireless.${!wireless_wifin_name}.key='${!wireless_wifin_key}'"
+		fi
+
+		if [ -n "$" ]; then
+			echo "uci set wireless.${!wireless_wifin_name}.network='${!wireless_wifin_interface}'"
+		fi
+
+		echo
 	fi
 done
 
