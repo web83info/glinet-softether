@@ -42,7 +42,7 @@ if [ "$GLINET_MODEL" = 'Mango' ]; then
 	glinet_switch_port_cpu=6
 	glinet_switch_port_wan=0
 	glinet_switch_port_lan1=1
-	glinet_ethernet_wan_name=eth0.2
+	glinet_ethernet_wan1_name=eth0.2
 	glinet_ethernet_lan1_name=eth0.1
 	glinet_interface_admin=eth0.1
 	glinet_interface_lan=eth0
@@ -67,11 +67,11 @@ if [ "$GLINET_MODEL" = 'Shadow' ]; then
 	# 内部構成
 	glinet_has_switch=0
 	if [ "$GLINET_FIRMWARE" = 'Vanilla' ]; then
-		glinet_ethernet_wan_name=eth1
+		glinet_ethernet_wan1_name=eth1
 		glinet_ethernet_lan1_name=eth0
 	fi
 	if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
-		glinet_ethernet_wan_name=eth0
+		glinet_ethernet_wan1_name=eth0
 		glinet_ethernet_lan1_name=eth1
 	fi
 	glinet_interface_admin=br-vlantap.1
@@ -96,7 +96,7 @@ if [ "$GLINET_MODEL" = 'Creta' ]; then
 	glinet_switch_port_cpu=0
 	glinet_switch_port_lan1=2
 	glinet_switch_port_lan2=1
-	glinet_ethernet_wan_name=eth1
+	glinet_ethernet_wan1_name=eth1
 	glinet_ethernet_lan1_name=eth0.1
 	glinet_ethernet_lan2_name=eth0.1
 	glinet_interface_admin=eth0.1
@@ -120,7 +120,7 @@ if [ "$GLINET_MODEL" = 'Slate' ]; then
 	glinet_switch_port_wan=1
 	glinet_switch_port_lan1=2
 	glinet_switch_port_lan2=3
-	glinet_ethernet_wan_name=eth0.2
+	glinet_ethernet_wan1_name=eth0.2
 	glinet_ethernet_lan1_name=eth0.1
 	glinet_ethernet_lan2_name=eth0.1
 	glinet_interface_admin=eth0.1
@@ -147,7 +147,7 @@ if [ "$GLINET_MODEL" = 'Opal' ]; then
 	glinet_switch_port_wan=0
 	glinet_switch_port_lan1=1
 	glinet_switch_port_lan2=2
-	glinet_ethernet_wan_name=eth0.2
+	glinet_ethernet_wan1_name=eth0.2
 	glinet_ethernet_lan1_name=eth0.1
 	glinet_ethernet_lan2_name=eth0.1
 	glinet_interface_admin=eth0.1
@@ -169,7 +169,7 @@ fi
 if [ "$GLINET_MODEL" = 'Beryl' ]; then
 	# 内部構成
 	glinet_has_switch=0
-	glinet_ethernet_wan_name=wan
+	glinet_ethernet_wan1_name=wan
 	glinet_ethernet_lan1_name=lan2
 	glinet_ethernet_lan2_name=lan1
 	glinet_interface_admin=br-vlantap.1
@@ -193,7 +193,7 @@ if [ "$GLINET_MODEL" = 'Convex' ]; then
 	if [ "$GLINET_FIRMWARE" = 'Vanilla' ]; then
 		# 内部構成
 		glinet_has_switch=0
-		glinet_ethernet_wan_name=wan
+		glinet_ethernet_wan1_name=wan
 		glinet_ethernet_lan1_name=lan1
 		glinet_ethernet_lan2_name=lan2
 		glinet_interface_admin=br-vlantap.1
@@ -213,7 +213,7 @@ fi
 if [ "$GLINET_MODEL" = 'Brume' ]; then
 	# 内部構成
 	glinet_has_switch=0
-	glinet_ethernet_wan_name=wan
+	glinet_ethernet_wan1_name=wan
 	glinet_ethernet_lan1_name=lan0
 	glinet_ethernet_lan2_name=lan1
 	glinet_interface_admin=br-vlantap.1
@@ -230,7 +230,7 @@ fi
 if [ "$GLINET_MODEL" = 'SlateAX' ]; then
 	# 内部構成
 	glinet_has_switch=0
-	glinet_ethernet_wan_name=eth0
+	glinet_ethernet_wan1_name=eth0
 	glinet_ethernet_lan1_name=eth1
 	glinet_ethernet_lan2_name=eth2
 	glinet_interface_admin=br-vlantap.1
@@ -249,7 +249,7 @@ fi
 if [ "$GLINET_MODEL" = 'AC1304' ]; then
 	# 内部構成
 	glinet_has_switch=0
-	glinet_ethernet_wan_name=wan
+	glinet_ethernet_wan1_name=wan
 	glinet_ethernet_lan1_name=lan
 	glinet_interface_admin=br-vlantap.1
 	glinet_interface_lan=br-vlantap.2
@@ -267,7 +267,7 @@ fi
 if [ "$GLINET_MODEL" = 'ERX' ]; then
 	# 内部構成
 	glinet_has_switch=0
-	glinet_ethernet_wan_name=eth0
+	glinet_ethernet_wan1_name=eth0
 	glinet_ethernet_lan1_name=eth1
 	glinet_ethernet_lan2_name=eth2
 	glinet_ethernet_lan3_name=eth3
@@ -279,7 +279,7 @@ fi
 if [ "$GLINET_MODEL" = 'FG50E' ]; then
 	# 内部構成
 	glinet_has_switch=0
-	glinet_ethernet_wan_name=br-wan
+	glinet_ethernet_wan1_name=br-wan
 	glinet_ethernet_lan1_name=lan1
 	glinet_ethernet_lan2_name=lan2
 	glinet_ethernet_lan3_name=lan3
@@ -310,7 +310,7 @@ fi
 if [ "$GLINET_MODEL" = 'WHW03' ]; then
 	# 内部構成
 	glinet_has_switch=0
-	glinet_ethernet_wan_name=wan
+	glinet_ethernet_wan1_name=wan
 	glinet_ethernet_lan1_name=lan
 	glinet_interface_admin=br-vlantap.1
 	glinet_interface_lan=br-vlantap.2

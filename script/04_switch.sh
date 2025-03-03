@@ -42,7 +42,6 @@ if [ "$glinet_has_switch" != 0 ]; then
 		echo
 	fi
 
-	# VLAN WAN
 	if [ "$VLAN_WAN_NAME" ]; then
 		cat <<- EOT
 		# VLAN WAN
@@ -109,6 +108,18 @@ fi
 
 # スイッチなし
 if [ "$glinet_has_switch" = 0 ]; then
+	# VLAN WAN
+	if [ "$VLAN_WAN_DELETE" ] && [ "$VLAN_WAN_DELETE" != 0 ]; then
+		cat <<- EOT
+		# VLAN WAN 削除
+		uci del network.wan
+		uci del network.wan6
+		uci del firewall.@zone[1].network
+		uci del dhcp.wan
+		EOT
+		echo
+	fi
+
 	if [ "$VLAN_WAN_PROTO" = 'static' ]; then
 		cat <<- EOT
 		uci set network.wan.proto='$VLAN_WAN_PROTO'
