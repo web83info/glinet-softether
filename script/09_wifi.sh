@@ -124,6 +124,7 @@ do
 	wireless_wifin_key=WIRELESS_WIFI${i}_KEY
 	wireless_wifin_interface=WIRELESS_WIFI${i}_INTERFACE
 	wireless_wifin_wds=WIRELESS_WIFI${i}_WDS
+	wireless_wifin_11r=WIRELESS_WIFI${i}_11R
 	if [ "${!wireless_wifin_name}" ]; then
 
 		echo "uci set wireless.${!wireless_wifin_name}=wifi-iface"
@@ -154,6 +155,14 @@ do
 
 		if [ "${!wireless_wifin_wds}" ]; then
 			echo "uci set wireless.${!wireless_wifin_name}.wds='${!wireless_wifin_wds}'"
+		fi
+
+		if [ "${!wireless_wifin_11r}" ]; then
+			echo 'nasid=`head /dev/urandom | grep -o "[0-9A-F]" | head -n 12 | tr -d "\n"`'
+			echo "uci set wireless.${!wireless_wifin_name}.ieee80211r='${!wireless_wifin_11r}'"
+			echo "uci set wireless.${!wireless_wifin_name}.nasid=\$nasid"
+			echo "uci set wireless.${!wireless_wifin_name}.mobility_domain='8383'"
+			echo "uci set wireless.${!wireless_wifin_name}.ft_over_ds='0'"
 		fi
 
 		echo
