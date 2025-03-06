@@ -305,6 +305,22 @@ if [ "$GLINET_MODEL" = 'WABI1750PS' ]; then
 	wireless_radio1_name=radio1
 	wireless_2g_name=radio1
 	wireless_5g1_name=radio0
+
+	# 事前実行コマンド
+	# インターフェース'br-lan'から'eth1'を取り除く
+	#   'eth0 eth1'=>'eth0'
+	COMMAND_BEFORE1="uci del network.@device[0].ports"
+	COMMAND_BEFORE2="uci add_list network.@device[0].ports='eth0'"
+
+	# インターフェース'wan'を作成する
+	#   ファイヤーウォールルール'wan'はインストール時に設定されている
+	COMMAND_BEFORE3="uci set network.wan=interface"
+	COMMAND_BEFORE4="uci set network.wan.proto='dhcp'"
+	COMMAND_BEFORE5="uci set network.wan.device='eth1'"
+	COMMAND_BEFORE6="uci commit"
+
+	# wanにDHCPでIPを取得する
+	COMMAND_BEFORE7="ifup wan && sleep 30"
 fi
 
 if [ "$GLINET_MODEL" = 'WHW03' ]; then
