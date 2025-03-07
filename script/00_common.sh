@@ -331,11 +331,25 @@ if [ "$GLINET_MODEL" = 'MR42' ]; then
 	# SSID最大数
 	wifi_ssid_max=16
 
-	# 無線周波数帯
-	# radio0,1,2が初期化するごとにランダムに入れ替わる
-	wireless_2g_name=radio0
-	wireless_5g1_name=radio1
-	wireless_5g2_name=radio2
+	# 無線周波数帯名
+	# radio0,1,2が初期化するごとにランダムに入れ替わるため、インストール時に動的に取得
+	wireless_name_detect='
+# 無線名を取得
+for i in $(seq 0 2)
+do
+	wireless_path=wireless.radio${i}.path
+	wireless_path_value=$(uci get ${wireless_path})
+	if [[ "$wireless_path_value" == *pci0000* ]]; then
+		wireless_5g1_name=radio${i}
+	fi
+	if [[ "$wireless_path_value" == *pci0001* ]]; then
+		wireless_2g_name=radio${i}
+	fi
+	if [[ "$wireless_path_value" == *pci0002* ]]; then
+		wireless_5g2_name=radio${i}
+	fi
+done
+'
 fi
 
 # スペース区切りの文字列を分割し、複数行で処理するためのサブルーチン
