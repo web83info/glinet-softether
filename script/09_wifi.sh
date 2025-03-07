@@ -174,7 +174,7 @@ do
 
 		if [ "${!wireless_wifin_80211r}" ]; then
 			echo 'nasid=`head /dev/urandom | grep -o "[0-9A-F]" | head -n 12 | tr -d "\n"`'
-			echo "uci set wireless.${!wireless_wifin_name}.ieee80211r='${!wireless_wifin_11r}'"
+			echo "uci set wireless.${!wireless_wifin_name}.ieee80211r='${!wireless_wifin_80211r}'"
 			echo "uci set wireless.${!wireless_wifin_name}.nasid=\$nasid"
 			echo "uci set wireless.${!wireless_wifin_name}.mobility_domain='8383'"
 			echo "uci set wireless.${!wireless_wifin_name}.ft_over_ds='0'"
