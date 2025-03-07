@@ -55,12 +55,11 @@ if [ "$GLINET_MODEL" = 'Mango' ]; then
 
 	# 無線周波数帯
 	if [ "$GLINET_FIRMWARE" = 'Vanilla' ]; then
-		wireless_radio0_name=radio0
+		wireless_2g_name=radio0
 	fi
 	if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
-		wireless_radio0_name=mt7628
+		wireless_2g_name=mt7628
 	fi
-	wireless_2g_name=radio0
 fi
 
 if [ "$GLINET_MODEL" = 'Shadow' ]; then
@@ -84,8 +83,6 @@ if [ "$GLINET_MODEL" = 'Shadow' ]; then
 	wifi_ssid_max=8
 
 	# 無線周波数帯
-	wireless_radio0_name=radio0
-	wireless_radio0_band=2g
 	wireless_2g_name=radio0
 fi
 
@@ -106,8 +103,6 @@ if [ "$GLINET_MODEL" = 'Creta' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_radio0_name=radio0
-	wireless_radio1_name=radio1
 	wireless_2g_name=radio1
 	wireless_5g1_name=radio0
 fi
@@ -133,8 +128,6 @@ if [ "$GLINET_MODEL" = 'Slate' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_radio0_name=radio0
-	wireless_radio1_name=radio1
 	wireless_2g_name=radio1
 	wireless_5g1_name=radio0
 fi
@@ -160,8 +153,6 @@ if [ "$GLINET_MODEL" = 'Opal' ]; then
 	wifi_ssid_max=4
 
 	# 無線周波数帯
-	wireless_radio0_name=radio0
-	wireless_radio1_name=radio1
 	wireless_2g_name=radio0
 	wireless_5g1_name=radio1
 fi
@@ -182,8 +173,6 @@ if [ "$GLINET_MODEL" = 'Beryl' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_radio0_name=radio0
-	wireless_radio1_name=radio1
 	wireless_2g_name=radio0
 	wireless_5g1_name=radio1
 fi
@@ -203,8 +192,6 @@ if [ "$GLINET_MODEL" = 'Convex' ]; then
 		wifi_ssid_max=16
 
 		# 無線周波数帯
-		wireless_radio0_name=radio0
-		wireless_radio1_name=radio1
 		wireless_2g_name=radio0
 		wireless_5g1_name=radio1
 	fi
@@ -240,8 +227,6 @@ if [ "$GLINET_MODEL" = 'SlateAX' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_radio0_name=radio0
-	wireless_radio1_name=radio1
 	wireless_2g_name=radio1
 	wireless_5g1_name=radio0
 fi
@@ -258,8 +243,6 @@ if [ "$GLINET_MODEL" = 'AC1304' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_radio0_name=radio0
-	wireless_radio1_name=radio1
 	wireless_2g_name=radio0
 	wireless_5g1_name=radio1
 fi
@@ -301,8 +284,6 @@ if [ "$GLINET_MODEL" = 'WABI1750PS' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_radio0_name=radio0
-	wireless_radio1_name=radio1
 	wireless_2g_name=radio1
 	wireless_5g1_name=radio0
 
@@ -335,12 +316,9 @@ if [ "$GLINET_MODEL" = 'WHW03' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_radio0_name=radio0 # ch 100~
-	wireless_radio1_name=radio1
-	wireless_radio2_name=radio2 # ch 36~
 	wireless_2g_name=radio1
-	wireless_5g1_name=radio2
-	wireless_5g2_name=radio0
+	wireless_5g1_name=radio2 # ch 36~
+	wireless_5g2_name=radio0 # ch 100~
 fi
 
 if [ "$GLINET_MODEL" = 'MR42' ]; then
@@ -354,13 +332,10 @@ if [ "$GLINET_MODEL" = 'MR42' ]; then
 	wifi_ssid_max=16
 
 	# 無線周波数帯
-	wireless_radio0_name=radio0
-	wireless_radio1_name=radio1
-	wireless_radio2_name=radio2
 	# radio0,1,2が初期化するごとにランダムに入れ替わる
-	# wireless_2g_name=radio0
-	# wireless_5g1_name=radio1
-	# wireless_5g2_name=radio2
+	wireless_2g_name=radio0
+	wireless_5g1_name=radio1
+	wireless_5g2_name=radio2
 fi
 
 # スペース区切りの文字列を分割し、複数行で処理するためのサブルーチン

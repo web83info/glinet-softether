@@ -4,8 +4,7 @@ echo '# 09.Wifi'
 
 if [ "$WIRELESS_2G_ENABLE" ] && [ "$WIRELESS_2G_ENABLE" != 0 ]; then
 	# 2.4GHz基本設定
-	radio_2g_name=wireless_${wireless_2g_name}_name
-	radio_2g=${!radio_2g_name}
+	radio_2g=$wireless_2g_name
 	cat <<- EOT
 	# 2.4GHz基本設定
 	uci del wireless.default_${radio_2g}
@@ -38,8 +37,7 @@ fi
 
 if [ "$WIRELESS_5G1_ENABLE" ] && [ "$WIRELESS_5G1_ENABLE" != 0 ]; then
 	# 5GHz(1) 基本設定
-	radio_5g1_name=wireless_${wireless_5g1_name}_name
-	radio_5g1=${!radio_5g1_name}
+	radio_5g1=$wireless_5g1_name
 	cat <<- EOT
 	# 5GHz(1) 基本設定
 	uci del wireless.default_${radio_5g1}
@@ -72,8 +70,7 @@ fi
 
 if [ "$WIRELESS_5G2_ENABLE" ] && [ "$WIRELESS_5G2_ENABLE" != 0 ]; then
 	# 5GHz(2) 基本設定
-	radio_5g2_name=wireless_${wireless_5g2_name}_name
-	radio_5g2=${!radio_5g2_name}
+	radio_5g2=$wireless_5g2_name
 	cat <<- EOT
 	# 5GHz(2) 基本設定
 	uci del wireless.default_${radio_5g2}
