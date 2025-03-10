@@ -12,6 +12,11 @@ if [ -z "$GLINET_FIRMWARE" ]; then
 	GLINET_FIRMWARE=Stock
 fi
 
+# EXTROOTインストール（既定値：0=インストールしない）
+if [ -z "$INSTALL_EXTROOT" ]; then
+	INSTALL_EXTROOT=0
+fi
+
 # インターフェース "admin" DHCPサーバ（既定値：1=使用する）
 if [ -z "$SYSTEM_ADMIN_DHCP_ENABLE" ]; then
 	SYSTEM_ADMIN_DHCP_ENABLE=1

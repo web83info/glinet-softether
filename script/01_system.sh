@@ -30,13 +30,77 @@ done
 echo
 
 cat <<- 'EOT'
-# インターネットへの疎通がないときには終了
-ping -c 1 openwrt.org > /dev/null 2>&1
-if [ $? != 0 ]; then
-	echo "No Internet. Aborting."
-	exit 1
+# インターネットへの疎通が確認できるまで待機
+# ping -c 1 openwrt.org > /dev/null 2>&1
+# if [ $? != 0 ]; then
+# 	echo "No Internet. Aborting."
+# 	exit 1
+# fi
+
+while :
+do
+    ping -c 1 openwrt.org > /dev/null 2>&1
+    if [ $? == 0 ]; then
+        break
+    fi
+done
+
+EOT
+
+# EXTROOT
+
+if [ "$INSTALL_EXTROOT" != 0 ]; then
+	cat <<- 'EOT'
+	# EXTROOT
+	SETUP_SCRIPT_DIR=$(cd $(dirname $0); pwd)
+	SETUP_SCRIPT_FILENAME=`basename $0`
+	SETUP_SCRIPT='. '$SETUP_SCRIPT_DIR'/'$SETUP_SCRIPT_FILENAME
+
+	if [ $(opkg list-installed | grep block-mount)='' ]; then
+
+	    # EXTROOTインストール処理
+	    sed -i 's/exit 0//g' /etc/rc.local
+	    echo $SETUP_SCRIPT >> /etc/rc.local
+
+	    chmod +x /etc/rc.local
+
+	    opkg update
+	    opkg install block-mount kmod-fs-ext4 e2fsprogs parted kmod-usb-storage
+
+	    DISK="/dev/sda"
+	    parted -s ${DISK} -- mklabel gpt mkpart extroot 2048s -2048s
+	    DEVICE="${DISK}1"
+	    echo y | mkfs.ext4 -L extroot ${DEVICE}
+
+	    ORIG="$(block info | sed -n -e '/MOUNT="\S*\/overlay"/s/:\s.*$//p')"
+	    uci -q delete fstab.rwm
+	    uci set fstab.rwm="mount"
+	    uci set fstab.rwm.device="${ORIG}"
+	    uci set fstab.rwm.target="/rwm"
+	    uci commit fstab
+
+	    eval $(block info ${DEVICE} | grep -o -e 'UUID="\S*"')
+	    eval $(block info | grep -o -e 'MOUNT="\S*/overlay"')
+	    uci -q delete fstab.extroot
+	    uci set fstab.extroot="mount"
+	    uci set fstab.extroot.uuid="${UUID}"
+	    uci set fstab.extroot.target="${MOUNT}"
+	    uci commit fstab
+
+	    mount ${DEVICE} /mnt
+	    tar -C ${MOUNT} -cvf - . | tar -C /mnt -xf -
+
+	    reboot
+	
+	else
+	    sed -i "s/$SETUP_SCRIPT//g" /etc/rc.local
+	fi
+
+	EOT
+
 fi
 
+cat <<- 'EOT'
 # プロンプトに色を付ける
 echo 'export PS1='\''\[\e[1;31m\]\u@\h:\w\$ \[\e[0m\]\'\' >> /etc/profile
 
