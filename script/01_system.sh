@@ -31,12 +31,6 @@ echo
 
 cat <<- 'EOT'
 # インターネットへの疎通が確認できるまで待機
-# ping -c 1 openwrt.org > /dev/null 2>&1
-# if [ $? != 0 ]; then
-# 	echo "No Internet. Aborting."
-# 	exit 1
-# fi
-
 while :
 do
     ping -c 1 openwrt.org > /dev/null 2>&1
@@ -93,7 +87,7 @@ if [ "$INSTALL_EXTROOT" != 0 ]; then
 	    reboot
 	
 	else
-	    sed -i "s/$SETUP_SCRIPT//g" /etc/rc.local
+	    sed -i 's;$SETUP_SCRIPT;;g' /etc/rc.local
 	fi
 
 	EOT
