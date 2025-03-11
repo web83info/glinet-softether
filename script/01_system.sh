@@ -53,8 +53,12 @@ if [ "$INSTALL_EXTROOT" != 0 ]; then
 	if [ $(opkg list-installed | grep block-mount)='' ]; then
 
 	    # EXTROOTインストール処理
+		#   再起動後に自スクリプトを再実行
+		#   再々実行されないよう、再実行時に自スクリプト呼び出しを削除
 	    sed -i 's/exit 0//g' /etc/rc.local
 	    echo $SETUP_SCRIPT >> /etc/rc.local
+	    echo 'sed -i "s;'$SETUP_SCRIPT';;g" /etc/rc.local' >> /etc/rc.local
+	    echo 'sed -i "/^sed -i/d" /etc/rc.local' >> /etc/rc.local
 
 	    chmod +x /etc/rc.local
 
@@ -86,8 +90,6 @@ if [ "$INSTALL_EXTROOT" != 0 ]; then
 
 	    reboot
 	
-	else
-	    sed -i 's;$SETUP_SCRIPT;;g' /etc/rc.local
 	fi
 
 	EOT
