@@ -124,7 +124,7 @@ if [ "$glinet_has_switch" = 0 ]; then
 		cat <<- EOT
 		uci set network.wan.proto='$VLAN_WAN_PROTO'
 		uci set network.wan.ipaddr='$VLAN_WAN_IPADDR'
-		uci set network.wan='$VLAN_WAN_NETMASK'
+		uci set network.wan.netmask='$VLAN_WAN_NETMASK'
 		uci set network.wan.gateway='$VLAN_WAN_GATEWAY'
 		uci add_list network.wan.dns='$VLAN_WAN_DNS'
 
