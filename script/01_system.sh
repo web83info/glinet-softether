@@ -230,10 +230,11 @@ fi
 
 if [ "$SYSTEM_NTP_SERVER" ]; then
 	cat <<- 'EOT'
-	# NTPサーバ
+	# NTPサーバ、時刻同期
 	uci delete system.ntp.server
 	EOT
 	printf_multi "uci add_list system.ntp.server=%s" "$SYSTEM_NTP_SERVER"
+	echo 'ntpd -q -p ntp.nict.jp'
 	echo
 fi
 
