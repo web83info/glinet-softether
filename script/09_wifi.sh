@@ -46,6 +46,10 @@ if [ "$WIRELESS_2G_ENABLE" ] && [ "$WIRELESS_2G_ENABLE" != 0 ]; then
 		echo 'uci set wireless.${wireless_2g_name}.htmode='\'$WIRELESS_2G_HTMODE\'
 	fi
 
+	if [ "$WIRELESS_2G_TXPOWER" ]; then
+		echo 'uci set wireless.${wireless_2g_name}.txpower='\'$WIRELESS_2G_TXPOWER\'
+	fi
+
 	cat <<- 'EOT'
 	uci set wireless.${wireless_2g_name}.cell_density='3'
 
@@ -79,6 +83,10 @@ if [ "$WIRELESS_5G1_ENABLE" ] && [ "$WIRELESS_5G1_ENABLE" != 0 ]; then
 		echo 'uci set wireless.${wireless_5g1_name}.htmode='\'$WIRELESS_5G1_HTMODE\'
 	fi
 
+	if [ "$WIRELESS_5G1_TXPOWER" ]; then
+		echo 'uci set wireless.${wireless_5g1_name}.txpower='\'$WIRELESS_5G1_TXPOWER\'
+	fi
+
 	cat <<- 'EOT'
 	uci set wireless.${wireless_5g1_name}.cell_density='3'
 
@@ -110,6 +118,10 @@ if [ "$WIRELESS_5G2_ENABLE" ] && [ "$WIRELESS_5G2_ENABLE" != 0 ]; then
 
 	if [ "$WIRELESS_5G2_HTMODE" ]; then
 		echo 'uci set wireless.${wireless_5g2_name}.htmode='\'$WIRELESS_5G2_HTMODE\'
+	fi
+
+	if [ "$WIRELESS_5G2_TXPOWER" ]; then
+		echo 'uci set wireless.${wireless_5g2_name}.txpower='\'$WIRELESS_5G2_TXPOWER\'
 	fi
 
 	cat <<- 'EOT'
