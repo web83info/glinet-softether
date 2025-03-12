@@ -334,7 +334,7 @@ if [ "$GLINET_MODEL" = 'MR42' ]; then
 	glinet_interface_lan=br-vlantap.2
 
 	# SSID最大数
-	wifi_ssid_max=16
+	wifi_ssid_max=48
 
 	# 無線周波数帯名
 	# radio0,1,2が初期化するごとにランダムに入れ替わるため、インストール時に動的に取得
