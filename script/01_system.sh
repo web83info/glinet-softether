@@ -1,6 +1,8 @@
 # 00.実行開始
 echo "echo '実行開始時刻'"
 echo 'date'
+echo 'echo'
+echo
 
 # 00.スクリプトコメント
 
@@ -42,6 +44,16 @@ do
         break
     fi
 done
+
+EOT
+
+cat <<- 'EOT'
+# 時刻同期
+date
+ntpd -q -p 0.openwrt.pool.ntp.org
+sleep 10
+date
+echo
 
 EOT
 
@@ -234,13 +246,10 @@ fi
 
 if [ "$SYSTEM_NTP_SERVER" ]; then
 	cat <<- 'EOT'
-	# NTPサーバ、時刻同期
+	# NTPサーバ
 	uci delete system.ntp.server
 	EOT
 	printf_multi "uci add_list system.ntp.server=%s" "$SYSTEM_NTP_SERVER"
-	echo 'date'
-	echo 'ntpd -q -p 0.openwrt.pool.ntp.org'
-	echo 'date'
 	echo
 fi
 
