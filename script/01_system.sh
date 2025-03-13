@@ -239,7 +239,7 @@ if [ "$SYSTEM_NTP_SERVER" ]; then
 	EOT
 	printf_multi "uci add_list system.ntp.server=%s" "$SYSTEM_NTP_SERVER"
 	echo 'date'
-	echo 'ntpd -q -p ntp.nict.jp'
+	echo 'ntpd -q -p 0.openwrt.pool.ntp.org'
 	echo 'date'
 	echo
 fi
