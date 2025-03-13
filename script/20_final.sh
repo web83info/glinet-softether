@@ -16,6 +16,10 @@ done
 
 echo
 
+# 実行終了
+echo "echo '実行終了時刻'"
+echo 'date'
+
 cat <<- EOT
 # コミット＆再起動
 uci commit

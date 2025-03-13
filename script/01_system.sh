@@ -1,3 +1,7 @@
+# 00.実行開始
+echo "echo '実行開始時刻'"
+echo 'date'
+
 # 00.スクリプトコメント
 
 echo '# 00.スクリプトコメント'
@@ -234,7 +238,9 @@ if [ "$SYSTEM_NTP_SERVER" ]; then
 	uci delete system.ntp.server
 	EOT
 	printf_multi "uci add_list system.ntp.server=%s" "$SYSTEM_NTP_SERVER"
+	echo 'date'
 	echo 'ntpd -q -p ntp.nict.jp'
+	echo 'date'
 	echo
 fi
 
