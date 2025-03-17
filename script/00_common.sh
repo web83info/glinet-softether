@@ -318,7 +318,7 @@ if [ "$GLINET_MODEL" = 'WHW03' ]; then
 	glinet_interface_lan=br-vlantap.2
 
 	# SSID最大数
-	wifi_ssid_max=16
+	wifi_ssid_max=48
 
 	# 無線周波数帯
 	wireless_2g_name=radio1
