@@ -122,11 +122,11 @@ if [ "$SYSTEM_ROOT_PASSWORD" ]; then
 	echo '# rootパスワード'
 
 	if [ "$GLINET_FIRMWARE" = 'Vanilla' ]; then
-		echo "echo -e \"$SYSTEM_ROOT_PASSWORD\n$SYSTEM_ROOT_PASSWORD\" | (passwd root)"
+		echo "echo -e \"$SYSTEM_ROOT_PASSWORD"'\\n'"$SYSTEM_ROOT_PASSWORD\" | (passwd root)"
 	fi
 
 	if [ "$GLINET_FIRMWARE" = 'Stock' ]; then
-		echo "echo -e \"$SYSTEM_ROOT_PASSWORD\n$SYSTEM_ROOT_PASSWORD\" | (passwd root)"
+		echo "echo -e \"$SYSTEM_ROOT_PASSWORD"'\\n'"$SYSTEM_ROOT_PASSWORD\" | (passwd root)"
 		glinet_api "system" "set_password" "root" "" $SYSTEM_ROOT_PASSWORD
 		echo "uci set oui-httpd.main.inited=1"
 	fi
