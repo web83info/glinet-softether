@@ -47,6 +47,9 @@ source ./12_goodcloud.sh
 # 13.SMTP
 source ./13_smtp.sh
 
+# 14.ttyd
+source ./14_ttyd.sh
+
 # 20.最終処理
 source ./20_final.sh
 

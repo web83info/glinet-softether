@@ -50,14 +50,6 @@ if [ "$SOFTETHER_INSTALL" != 0 ]; then
 
 fi
 
-# ttyパッケージ
-cat <<- 'EOT'
-# ttyパッケージインストール
-opkg install luci-app-ttyd luci-i18n-ttyd-ja
-uci delete ttyd.@ttyd[0].interface
-
-EOT
-
 if [ "$PACKAGE_EXTRA" ]; then
 	cat <<- EOT
 	# 追加パッケージ
