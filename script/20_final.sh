@@ -34,6 +34,7 @@ if [ "$SYSTEM_SSL_ENABLE" ]; then
 		cat <<- EOT
 		# SSL証明書取得
 		/etc/init.d/acme start
+		/etc/init.d/acme renew
 
 		EOT
 	fi
