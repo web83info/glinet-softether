@@ -19,10 +19,28 @@ echo
 # 実行終了
 echo "echo '実行終了時刻'"
 echo 'date'
+echo 'echo'
+echo
 
 cat <<- EOT
-# コミット＆再起動
+# コミット
 uci commit
+
+EOT
+
+# SSL証明書
+if [ "$SYSTEM_SSL_ENABLE" ]; then
+	if [ "$SYSTEM_SSL_CERT_BY" = 'lets_encrypt' ]; then
+		cat <<- EOT
+		# SSL証明書取得
+		/etc/init.d/acme start
+
+		EOT
+	fi
+fi
+
+cat <<- EOT
+# 再起動
 reboot
 
 EOT

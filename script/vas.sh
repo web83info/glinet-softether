@@ -47,8 +47,14 @@ source ./12_goodcloud.sh
 # 13.SMTP
 source ./13_smtp.sh
 
-# 14.ttyd
-source ./14_ttyd.sh
+# 14.SSL
+source ./14_ssl.sh
+
+# 15.uhttpd
+source ./15_uhttpd.sh
+
+# 16.ttyd
+source ./16_ttyd.sh
 
 # 20.最終処理
 source ./20_final.sh
