@@ -16,12 +16,6 @@ done
 
 echo
 
-# 実行終了
-echo "echo '実行終了時刻'"
-echo 'date'
-echo 'echo'
-echo
-
 cat <<- EOT
 # コミット
 uci commit
@@ -39,6 +33,12 @@ if [ "$SYSTEM_SSL_ENABLE" ] && [ "$SYSTEM_SSL_ENABLE" != 0 ]; then
 		EOT
 	fi
 fi
+
+# 実行終了
+echo "echo '実行終了時刻'"
+echo 'date'
+echo 'echo'
+echo
 
 cat <<- EOT
 # 再起動
