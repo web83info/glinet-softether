@@ -9,7 +9,7 @@ opkg install luci-app-ttyd luci-i18n-ttyd-ja
 uci delete ttyd.@ttyd[0].interface
 EOT
 
-if [ "$SYSTEM_SSL_ENABLE" ]; then
+if [ "$SYSTEM_SSL_ENABLE" ] && [ "$SYSTEM_SSL_ENABLE" != 0 ]; then
 	echo 'uci set ttyd.@ttyd[0].ssl=1';
 	if [ "$SYSTEM_SSL_CERT_BY" = 'self' ]; then
 		cat <<- EOT

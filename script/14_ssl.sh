@@ -3,7 +3,8 @@
 echo '# 14.SSL'
 
 # SSL証明書
-if [ "$SYSTEM_SSL_ENABLE" ]; then
+if [ "$SYSTEM_SSL_ENABLE" ] && [ "$SYSTEM_SSL_ENABLE" != 0 ]; then
+
 	if [ "$SYSTEM_SSL_CERT_BY" = 'lets_encrypt' ]; then
 		cat <<- EOT
 			# SSL証明書取得
