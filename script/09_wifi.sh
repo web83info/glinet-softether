@@ -164,6 +164,10 @@ do
 			echo "uci set wireless.${!wireless_wifin_name}.mode='${!wireless_wifin_mode}'"
 		fi
 
+		if [ "${!wireless_wifin_wds}" ]; then
+			echo "uci set wireless.${!wireless_wifin_name}.wds='${!wireless_wifin_wds}'"
+		fi
+
 		if [ "${!wireless_wifin_ssid}" ]; then
 			echo "uci set wireless.${!wireless_wifin_name}.ssid='${!wireless_wifin_ssid}'"
 		fi
@@ -178,10 +182,6 @@ do
 
 		if [ "${!wireless_wifin_interface}" ]; then
 			echo "uci set wireless.${!wireless_wifin_name}.network='${!wireless_wifin_interface}'"
-		fi
-
-		if [ "${!wireless_wifin_wds}" ]; then
-			echo "uci set wireless.${!wireless_wifin_name}.wds='${!wireless_wifin_wds}'"
 		fi
 
 		if [ "${!wireless_wifin_80211r}" ]; then
