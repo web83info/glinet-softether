@@ -16,3 +16,13 @@ do
 		EOT
 	fi
 done
+
+cat <<- 'EOT'
+uci del dhcp.@dnsmasq[0].boguspriv
+uci del dhcp.@dnsmasq[0].filterwin2k
+uci del dhcp.@dnsmasq[0].nonegcache
+uci del dhcp.@dnsmasq[0].nonwildcard
+
+uci add_list dhcp.@dnsmasq[0].notinterface='br-vlantap*'
+
+EOT

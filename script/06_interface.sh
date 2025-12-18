@@ -1,6 +1,6 @@
-# 07.インターフェース
+# 06.インターフェース
 
-echo '# 07.インターフェース'
+echo '# 06.インターフェース'
 
 for i in $(seq 1 $vlan_max)
 do
@@ -50,12 +50,3 @@ do
 		fi
 	fi
 done
-cat <<- 'EOT'
-uci del dhcp.@dnsmasq[0].boguspriv
-uci del dhcp.@dnsmasq[0].filterwin2k
-uci del dhcp.@dnsmasq[0].nonegcache
-uci del dhcp.@dnsmasq[0].nonwildcard
-
-uci add_list dhcp.@dnsmasq[0].notinterface='br-vlantap*'
-
-EOT

@@ -1,6 +1,6 @@
-# 06.VLAN
+# 07.VLAN
 
-echo "# 06.VLAN"
+echo "# 07.VLAN"
 
 # スイッチあり
 if [ "$glinet_has_switch" != 0 ]; then

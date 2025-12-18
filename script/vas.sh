@@ -23,11 +23,11 @@ source ./04_lan_wan.sh
 # 05.ブリッジ
 source ./05_bridge.sh
 
-# 06.VLAN
-source ./06_vlan.sh
+# 06.インターフェース
+source ./06_interface.sh
 
-# 07.インターフェース
-source ./07_interface.sh
+# 07.VLAN
+source ./07_vlan.sh
 
 # 08.DHCP
 source ./08_dhcp.sh
