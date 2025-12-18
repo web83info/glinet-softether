@@ -17,8 +17,8 @@ source ./02_package.sh
 # 03.SoftEther設定
 source ./03_softether.sh
 
-# 04.スイッチ
-source ./04_switch.sh
+# 04.既存LAN・WAN
+source ./04_lan_wan.sh
 
 # 05.ブリッジ
 source ./05_bridge.sh

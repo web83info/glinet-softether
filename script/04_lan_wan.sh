@@ -1,4 +1,4 @@
-# 04.スイッチ
+# 04.既存LAN・WAN
 
 # イーサネット名をスイッチのポート番号に変換する
 function convert_ethernet_name_switch_port() {
@@ -23,7 +23,7 @@ function convert_ethernet_name_switch_port() {
 	echo "uci set network.@switch_vlan[$2].ports='${ports}'"
 }
 
-echo '# 04.スイッチ'
+echo '# 04.既存LAN・WAN'
 
 # スイッチあり
 if [ "$glinet_has_switch" != 0 ]; then
@@ -84,26 +84,6 @@ if [ "$glinet_has_switch" != 0 ]; then
 		fi
 	fi
 
-	# 各VLAN
-	for i in $(seq 1 $vlan_max)
-	do
-		vlann_name=VLAN${i}_NAME
-		vlann_vlan=VLAN${i}_VID
-		vlann_vid=VLAN${i}_VID
-		vlann_ports_name_variable=VLAN${i}_PORTS
-		if [ -n "${!vlann_name}" ]; then
-			cat <<- EOT
-			# VLAN ${!vlann_vid}
-			uci add network switch_vlan
-			uci set network.@switch_vlan[-1].device='switch0'
-			uci set network.@switch_vlan[-1].vlan='${!vlann_vlan}'
-			uci set network.@switch_vlan[-1].vid='${!vlann_vid}'
-			uci set network.@switch_vlan[-1].description='${!vlann_name}'
-			EOT
-			convert_ethernet_name_switch_port "${!vlann_ports_name_variable}" "-1"
-			echo
-		fi
-	done
 fi
 
 # スイッチなし

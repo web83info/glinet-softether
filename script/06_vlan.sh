@@ -4,11 +4,26 @@ echo "# 06.VLAN"
 
 # スイッチあり
 if [ "$glinet_has_switch" != 0 ]; then
+
+	# 各VLAN
 	for i in $(seq 1 $vlan_max)
 	do
 		vlann_name=VLAN${i}_NAME
 		vlann_vlan=VLAN${i}_VID
 		vlann_vid=VLAN${i}_VID
+		vlann_ports_name_variable=VLAN${i}_PORTS
+		if [ -n "${!vlann_name}" ]; then
+			cat <<- EOT
+			# VLAN ${!vlann_vid}
+			uci add network switch_vlan
+			uci set network.@switch_vlan[-1].device='switch0'
+			uci set network.@switch_vlan[-1].vlan='${!vlann_vlan}'
+			uci set network.@switch_vlan[-1].vid='${!vlann_vid}'
+			uci set network.@switch_vlan[-1].description='${!vlann_name}'
+			EOT
+			convert_ethernet_name_switch_port "${!vlann_ports_name_variable}" "-1"
+			echo
+		fi
 
 		# TAPデバイス
 		vlann_hub_to=VLAN${i}_HUB_TO
