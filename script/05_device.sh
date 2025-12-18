@@ -2,6 +2,8 @@
 
 echo '# 05.デバイス'
 
+# ブリッジ vlantap 追加
+
 # スイッチあり
 if [ "$glinet_has_switch" != 0 ]; then
 	cat <<- 'EOT'
@@ -62,5 +64,26 @@ if [ "$glinet_has_switch" = 0 ]; then
 		fi
 	done
 fi
+
+# デバイス追加
+for i in $(seq 1 $device_max)
+do
+	devicen_type=DEVICE${i}_TYPE
+	devicen_name=DEVICE${i}_NAME
+	devicen_ports=DEVICE${i}_PORTS
+	
+	if [ -n "${!devicen_name}" ] && [ -n "${!devicen_type}" ] && [ -n "${!devicen_ports}" ]; then
+		cat <<- EOT
+		uci add network device
+		uci set network.@device[-1].type='${!devicen_type}'
+		uci set network.@device[-1].name='${!devicen_name}'
+		EOT
+
+		for port in ${!devicen_ports}
+		do
+			echo "uci add_list network.@device[-1].ports='${port}'"
+		done
+	fi
+done
 
 echo

@@ -38,6 +38,12 @@ hub_max=5
 # VLAN最大数
 vlan_max=10
 
+# 追加デバイス最大数
+device_max=10
+
+# 追加インターフェース最大数
+interface_max=10
+
 # 機種ごと
 
 if [ "$GLINET_MODEL" = 'Mango' ]; then

@@ -50,3 +50,20 @@ do
 		fi
 	fi
 done
+
+# インターフェース追加
+for i in $(seq 1 $interface_max)
+do
+	interfacen_name=INTERFACE${i}_NAME
+	interfacen_proto=INTERFACE${i}_PROTO
+	interfacen_device=INTERFACE${i}_DEVICE
+
+	if [ "${!interfacen_name}" ]; then
+		cat <<- EOT
+		uci set network.${!interfacen_name}=interface
+		uci set network.${!interfacen_name}.proto='${!interfacen_proto}'
+		uci set network.${!interfacen_name}.device='${!interfacen_device}'
+
+		EOT
+	fi
+done
