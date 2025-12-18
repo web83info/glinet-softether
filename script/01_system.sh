@@ -23,6 +23,21 @@ echo
 
 echo '# 01.システム初期設定'
 
+# イーサネットが一つしかない場合、WANとして外部と通信できるようにする
+if [ "$has_only_one_ethernet" = 1 ]; then
+	cat <<- 'EOT'
+		uci set network.INTERNET_TMP=interface
+		uci set network.INTERNET_TMP.proto='dhcp'
+		uci set network.INTERNET_TMP.device='eth0'
+		uci add_list firewall.@zone[0].network='lan'
+		uci add_list firewall.@zone[0].network='INTERNET_TMP'
+		uci del network.@device[0].ports
+		uci commit
+		/etc/init.d/network reload && sleep 30
+
+	EOT
+fi
+
 # 事前実行コマンド
 echo '# 事前実行コマンド'
 

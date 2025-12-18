@@ -39,13 +39,15 @@ if [ "$glinet_has_switch" = 0 ]; then
 	EOT
 
 	if [ "$VLAN_WAN_AS_LAN" ] && [ "$VLAN_WAN_AS_LAN" != 0 ]; then
-		for i in $(seq 1 2)
-		do
-			glinet_ethernet_wann_name=glinet_ethernet_wan${i}_name
-			if [ -n "${!glinet_ethernet_wann_name}" ]; then
-				echo "uci add_list network.@device[-1].ports='${!glinet_ethernet_wann_name}'"
-			fi
-		done
+		if [ "$has_only_one_ethernet" != 1 ]; then
+			for i in $(seq 1 2)
+			do
+				glinet_ethernet_wann_name=glinet_ethernet_wan${i}_name
+				if [ -n "${!glinet_ethernet_wann_name}" ]; then
+					echo "uci add_list network.@device[-1].ports='${!glinet_ethernet_wann_name}'"
+				fi
+			done
+		fi
 	fi
 
 	for i in $(seq 1 8)

@@ -34,6 +34,17 @@ if [ "$SYSTEM_SSL_ENABLE" ] && [ "$SYSTEM_SSL_ENABLE" != 0 ]; then
 	fi
 fi
 
+# イーサネットが一つしかない場合に追加したWANを削除する
+if [ "$has_only_one_ethernet" = 1 ]; then
+	cat <<- 'EOT'
+		uci del network.INTERNET_TMP
+		uci del_list firewall.@zone[0].network='INTERNET_TMP'
+
+		uci commit
+
+	EOT
+fi
+
 # 実行終了
 echo "echo '実行終了時刻'"
 echo 'date'

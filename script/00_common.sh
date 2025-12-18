@@ -336,6 +336,8 @@ if [ "$GLINET_MODEL" = 'MR42' ]; then
 	# 内部構成
 	glinet_has_switch=0
 	glinet_ethernet_lan1_name=eth0
+	glinet_ethernet_wan1_name=eth0
+	has_only_one_ethernet=1
 	glinet_interface_admin=br-vlantap.1
 	glinet_interface_lan=br-vlantap.2
 
