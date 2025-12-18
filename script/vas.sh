@@ -20,8 +20,8 @@ source ./03_softether.sh
 # 04.既存LAN・WAN
 source ./04_lan_wan.sh
 
-# 05.ブリッジ
-source ./05_bridge.sh
+# 05.デバイス
+source ./05_device.sh
 
 # 06.インターフェース
 source ./06_interface.sh
