@@ -23,6 +23,13 @@ opkg install luci-i18n-base-ja
 
 EOT
 
+# SFTPサーバー
+cat <<- 'EOT'
+# SFTPサーバーインストール
+opkg install openssh-sftp-server
+
+EOT
+
 # SoftEther
 
 if [ "$SOFTETHER_INSTALL" != 0 ]; then
