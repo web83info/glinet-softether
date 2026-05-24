@@ -2,6 +2,26 @@
 
 echo "# 07.VLAN"
 
+# ポート処理の共通関数
+output_uci_bridge_vlan_ports() {
+	local ports_list="$1"
+	for each_port in $ports_list; do
+		each_port_head=${each_port%??}
+		each_port_tail2=${each_port: -2}
+		if [ "$each_port_tail2" = ":t" ]; then
+			each_port_variable=glinet_ethernet_${each_port_head}_name
+			each_port_name=${!each_port_variable}
+			each_port_name+=':t'
+		else
+			each_port_variable=glinet_ethernet_${each_port}_name
+			each_port_name=${!each_port_variable}
+		fi
+		if [ -n "${each_port_name}" ]; then
+			echo "uci add_list network.@bridge-vlan[-1].ports='${each_port_name}'"
+		fi
+	done
+}
+
 # スイッチあり
 if [ "$glinet_has_switch" != 0 ]; then
 
@@ -60,19 +80,8 @@ if [ "$glinet_has_switch" = 0 ]; then
 	uci set network.@bridge-vlan[-1].vlan='1'
 	EOT
 
-	vlan_lan_ports_name_each=($VLAN_LAN_PORTS)
-	for each_port in "${vlan_lan_ports_name_each[@]}"; do
-		each_port_head4=${each_port::4}
-		each_port_variable=glinet_ethernet_${each_port_head4}_name
-		each_port_tail2=${each_port: -2}
-		each_port_name=${!each_port_variable}
-		if [ "$each_port_tail2" = ":t" ]; then
-			each_port_name+=':t'
-		fi
-		if [ -n "${each_port_name}" ]; then
-			echo "uci add_list network.@bridge-vlan[-1].ports='${each_port_name}'"
-		fi
-	done;
+	# 関数呼び出し
+	output_uci_bridge_vlan_ports "$VLAN_LAN_PORTS"
 
 	echo
 
@@ -89,7 +98,6 @@ if [ "$glinet_has_switch" = 0 ]; then
 		vlann_vlan=VLAN${i}_VID
 		vlann_ports_name_variable=VLAN${i}_PORTS # VLAN1_PORTS
 		vlann_ports_name=${!vlann_ports_name_variable} # "lan1:t lan2 lan3:t" separated by space.
-		vlann_ports_name_each=($vlann_ports_name)
 
 		# TAPデバイス
 		vlann_hub_to=VLAN${i}_HUB_TO
@@ -111,18 +119,8 @@ if [ "$glinet_has_switch" = 0 ]; then
 				echo "uci add_list network.@bridge-vlan[-1].ports='${tap_port}'"
 			fi
 
-			for each_port in "${vlann_ports_name_each[@]}"; do
-				each_port_head4=${each_port::4}
-				each_port_variable=glinet_ethernet_${each_port_head4}_name
-				each_port_tail2=${each_port: -2}
-				each_port_name=${!each_port_variable}
-				if [ "$each_port_tail2" = ":t" ]; then
-					each_port_name+=':t'
-				fi
-				if [ -n "${each_port_name}" ]; then
-					echo "uci add_list network.@bridge-vlan[-1].ports='${each_port_name}'"
-				fi
-			done;
+			# 関数呼び出し
+			output_uci_bridge_vlan_ports "$vlann_ports_name"
 			echo
 		fi
 	done
