@@ -135,6 +135,7 @@ fi
 for i in $(seq 1 $wifi_ssid_max)
 do
 	wireless_wifin_name=WIRELESS_WIFI${i}_NAME
+	wireless_wifin_ifname=WIRELESS_WIFI${i}_IFNAME
 	wireless_wifin_radio=WIRELESS_WIFI${i}_RADIO
 	if [ "${!wireless_wifin_radio}" = 2G ]; then
 		wireless_wifin_radio=wireless_2g_name
@@ -155,6 +156,10 @@ do
 	if [ "${!wireless_wifin_name}" ]; then
 
 		echo "uci set wireless.${!wireless_wifin_name}=wifi-iface"
+
+		if [ "${!wireless_wifin_ifname}" ]; then
+			echo "uci set wireless.${!wireless_wifin_name}.ifname='${!wireless_wifin_ifname}'"
+		fi
 
 		if [ "$wireless_wifin_radio" ]; then
 			echo "uci set wireless.${!wireless_wifin_name}.device=\${${wireless_wifin_radio}}"

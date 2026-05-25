@@ -247,8 +247,8 @@ if [ "$GLINET_MODEL" = 'AC1304' ]; then
 	glinet_has_switch=0
 	glinet_ethernet_wan1_name=wan
 	glinet_ethernet_lan1_name=lan
-	glinet_ethernet_wifi2g_name=phy0-sta0
-	glinet_ethernet_wifi5g1_name=phy1-sta0
+	glinet_ethernet_wifi2g_name=wifi2g
+	glinet_ethernet_wifi5g1_name=wifi5g1
 	glinet_interface_admin=br-vlantap.1
 	glinet_interface_lan=br-vlantap.2
 
