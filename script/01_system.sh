@@ -52,6 +52,7 @@ echo
 
 cat <<- 'EOT'
 # インターネットへの疎通が確認できるまで待機
+echo 'インターネット接続を確認中...'
 while :
 do
     ping -c 1 openwrt.org > /dev/null 2>&1
@@ -59,6 +60,7 @@ do
         break
     fi
 done
+echo 'インターネット接続を確認しました。'
 
 EOT
 
