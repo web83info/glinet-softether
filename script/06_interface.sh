@@ -64,6 +64,7 @@ do
 	interfacen_name=INTERFACE${i}_NAME
 	interfacen_proto=INTERFACE${i}_PROTO
 	interfacen_device=INTERFACE${i}_DEVICE
+	interfacen_zone=INTERFACE${i}_ZONE
 
 	if [ "${!interfacen_name}" ]; then
 		cat <<- EOT
@@ -72,5 +73,20 @@ do
 		uci set network.${!interfacen_name}.device='${!interfacen_device}'
 
 		EOT
+
+		if [ -n "${!interfacen_zone}" ]; then
+			if [ "${!interfacen_zone}" = 'lan' ]; then
+				cat <<- EOT
+				uci add_list firewall.@zone[0].network='${!interfacen_name}'
+
+				EOT
+			else
+				cat <<- EOT
+				uci add_list firewall.${!vlann_zone}.network='${!interfacen_name}'
+
+				EOT
+			fi
+		fi
+
 	fi
 done
