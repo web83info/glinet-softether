@@ -109,32 +109,34 @@ if [ "$glinet_has_switch" = 0 ]; then
 		fi
 
 		# config書き出し
-		if [ -n "${!vlann_name}" ]; then
-			cat <<- EOT
-			uci add network bridge-vlan
-			EOT
-
-			if [ -n "${!vlann_device}" ]; then
+		if	[ -n "${!vlann_name}" ]; then
+			if	[ -n "${!vlann_ports_name_variable}" ] || [ -n "${!vlann_hub_to}" ] ; then
 				cat <<- EOT
-				uci set network.@bridge-vlan[-1].device='${!vlann_device}'
+				uci add network bridge-vlan
 				EOT
-			else
+
+				if [ -n "${!vlann_device}" ]; then
+					cat <<- EOT
+					uci set network.@bridge-vlan[-1].device='${!vlann_device}'
+					EOT
+				else
+					cat <<- EOT
+					uci set network.@bridge-vlan[-1].device='br-vlantap'
+					EOT
+				fi
+
 				cat <<- EOT
-				uci set network.@bridge-vlan[-1].device='br-vlantap'
+				uci set network.@bridge-vlan[-1].vlan='${!vlann_vlan}'
 				EOT
+
+				if [ -n "${!vlann_hub_to}" ]; then
+					echo "uci add_list network.@bridge-vlan[-1].ports='${tap_port}'"
+				fi
+
+				# 関数呼び出し
+				output_uci_bridge_vlan_ports "$vlann_ports_name"
+				echo
 			fi
-
-			cat <<- EOT
-			uci set network.@bridge-vlan[-1].vlan='${!vlann_vlan}'
-			EOT
-
-			if [ -n "${!vlann_hub_to}" ]; then
-				echo "uci add_list network.@bridge-vlan[-1].ports='${tap_port}'"
-			fi
-
-			# 関数呼び出し
-			output_uci_bridge_vlan_ports "$vlann_ports_name"
-			echo
 		fi
 	done
 fi
