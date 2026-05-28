@@ -98,6 +98,7 @@ if [ "$glinet_has_switch" = 0 ]; then
 		vlann_vlan=VLAN${i}_VID
 		vlann_ports_name_variable=VLAN${i}_PORTS # VLAN1_PORTS
 		vlann_ports_name=${!vlann_ports_name_variable} # "lan1:t lan2 lan3:t" separated by space.
+		vlann_device=VLAN${i}_DEVICE
 
 		# TAPデバイス
 		vlann_hub_to=VLAN${i}_HUB_TO
@@ -111,7 +112,19 @@ if [ "$glinet_has_switch" = 0 ]; then
 		if [ -n "${!vlann_name}" ]; then
 			cat <<- EOT
 			uci add network bridge-vlan
-			uci set network.@bridge-vlan[-1].device='br-vlantap'
+			EOT
+
+			if [ -n "${!vlann_device}" ]; then
+				cat <<- EOT
+				uci set network.@bridge-vlan[-1].device='${!vlann_device}'
+				EOT
+			else
+				cat <<- EOT
+				uci set network.@bridge-vlan[-1].device='br-vlantap'
+				EOT
+			fi
+
+			cat <<- EOT
 			uci set network.@bridge-vlan[-1].vlan='${!vlann_vlan}'
 			EOT
 
