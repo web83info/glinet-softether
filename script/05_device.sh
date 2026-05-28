@@ -28,10 +28,12 @@ if [ "$glinet_has_switch" != 0 ]; then
 			echo "uci add_list network.@device[-1].ports='tap_hub${i}'"
 		fi
 	done
+	echo
 fi
 
 # スイッチなし
 if [ "$glinet_has_switch" = 0 ]; then
+	# vlantap 追加
 	cat <<- EOT
 	uci add network device
 	uci set network.@device[-1].type='bridge'
@@ -65,6 +67,7 @@ if [ "$glinet_has_switch" = 0 ]; then
 			echo "uci add_list network.@device[-1].ports='tap_hub${i}'"
 		fi
 	done
+	echo
 fi
 
 # デバイス追加
@@ -85,7 +88,6 @@ do
 		do
 			echo "uci add_list network.@device[-1].ports='${port}'"
 		done
+		echo
 	fi
 done
-
-echo
