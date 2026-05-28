@@ -95,7 +95,7 @@ do
 		fi
 
 		if [ -n "${!devicen_vid}" ]; then
-			echo "uci set network.@device[-1].vid=='${!devicen_vid}'"
+			echo "uci set network.@device[-1].vid='${!devicen_vid}'"
 		fi
 
 		for port in ${!devicen_ports}
