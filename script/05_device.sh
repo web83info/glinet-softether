@@ -6,6 +6,7 @@ echo '# 05.デバイス'
 
 # スイッチあり
 if [ "$glinet_has_switch" != 0 ]; then
+	# vlantap 追加
 	cat <<- 'EOT'
 	uci add network device
 	uci set network.@device[-1].type='bridge'
@@ -40,6 +41,7 @@ if [ "$glinet_has_switch" = 0 ]; then
 	uci set network.@device[-1].name='br-vlantap'
 	EOT
 
+	# WAN を LAN として追加
 	if [ "$VLAN_WAN_AS_LAN" ] && [ "$VLAN_WAN_AS_LAN" != 0 ]; then
 		if [ "$has_only_one_ethernet" != 1 ]; then
 			for i in $(seq 1 2)
@@ -52,6 +54,7 @@ if [ "$glinet_has_switch" = 0 ]; then
 		fi
 	fi
 
+	# LAN を追加
 	for i in $(seq 1 8)
 	do
 		glinet_ethernet_lann_name=glinet_ethernet_lan${i}_name
@@ -60,6 +63,7 @@ if [ "$glinet_has_switch" = 0 ]; then
 		fi
 	done
 
+	# 仮想ハブを追加
 	for i in $(seq 1 $hub_max)
 	do
 		se_hubn_name=SE_HUB${i}_NAME
@@ -75,14 +79,24 @@ for i in $(seq 1 $device_max)
 do
 	devicen_type=DEVICE${i}_TYPE
 	devicen_name=DEVICE${i}_NAME
+	devicen_ifname=DEVICE${i}_IFNAME
+	devicen_vid=DEVICE${i}_VID
 	devicen_ports=DEVICE${i}_PORTS
 	
-	if [ -n "${!devicen_name}" ] && [ -n "${!devicen_type}" ] && [ -n "${!devicen_ports}" ]; then
+	if [ -n "${!devicen_name}" ]; then
 		cat <<- EOT
 		uci add network device
 		uci set network.@device[-1].type='${!devicen_type}'
 		uci set network.@device[-1].name='${!devicen_name}'
 		EOT
+
+		if [ -n "${!devicen_ifname}" ]; then
+			echo "uci set network.@device[-1].ifname='${!devicen_ifname}'"
+		fi
+
+		if [ -n "${!devicen_vid}" ]; then
+			echo "uci set network.@device[-1].vid=='${!devicen_vid}'"
+		fi
 
 		for port in ${!devicen_ports}
 		do
