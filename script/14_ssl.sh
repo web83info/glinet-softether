@@ -8,7 +8,7 @@ if [ "$SYSTEM_SSL_ENABLE" ] && [ "$SYSTEM_SSL_ENABLE" != 0 ]; then
 	if [ "$SYSTEM_SSL_CERT_BY" = 'lets_encrypt' ]; then
 		cat <<- EOT
 			# SSL証明書取得
-			opkg install luci-app-acme acme-acmesh-dnsapi
+			\$PKG_INSTALL luci-app-acme acme-acmesh-dnsapi
 
 			uci del acme.example_wildcard
 			uci del acme.example_subdomain

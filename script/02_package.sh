@@ -4,14 +4,14 @@ echo '# 02.パッケージインストール・アップグレード'
 
 cat <<- 'EOT'
 # パッケージリスト取得
-opkg update
+$PKG_UPDATE
 
 EOT
 
 if [ "$PACKAGE_UPGRADE" != 0 ]; then
-	cat <<- EOT
+	cat <<- 'EOT'
 	# インストール済パッケージアップグレード
-	opkg list-upgradable | cut -f 1 -d ' ' | xargs opkg upgrade
+	$PKG_UPGRADE_ALL
 
 	EOT
 fi
@@ -19,14 +19,14 @@ fi
 # LuCI 言語ファイル
 cat <<- 'EOT'
 # LuCI 言語ファイルインストール
-opkg install luci-i18n-base-ja
+$PKG_INSTALL luci-i18n-base-ja
 
 EOT
 
 # SFTPサーバー
 cat <<- 'EOT'
 # SFTPサーバーインストール
-opkg install openssh-sftp-server
+$PKG_INSTALL openssh-sftp-server
 
 EOT
 
@@ -35,16 +35,16 @@ EOT
 if [ "$SOFTETHER_INSTALL" != 0 ]; then
 
 	if [ "$SOFTETHER_VERSION" = '4' ]; then
-		softether_opkg=softethervpn-server
+		softether_pkg=softethervpn-server
 	elif [ "$SOFTETHER_VERSION" = '5' ]; then
-		softether_opkg=softethervpn5-server
+		softether_pkg=softethervpn5-server
 	else
-		softether_opkg=softethervpn-server
+		softether_pkg=softethervpn-server
 	fi
 
 	cat <<- EOT
 	# SoftEtherインストール
-	opkg install $softether_opkg
+	\$PKG_INSTALL $softether_pkg
 	sleep 15
 
 	EOT
@@ -60,7 +60,7 @@ fi
 if [ "$PACKAGE_EXTRA" ]; then
 	cat <<- EOT
 	# 追加パッケージ
-	opkg install $PACKAGE_EXTRA
+	\$PKG_INSTALL $PACKAGE_EXTRA
 
 	EOT
 fi

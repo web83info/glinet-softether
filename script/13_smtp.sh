@@ -3,9 +3,9 @@
 echo '# 13.SMTP'
 
 if [ "$SMTP_INSTALL" ] && [ "$SMTP_INSTALL" != 0 ]; then
-	cat <<- EOT
+	cat <<- 'EOT'
 	# SMTPインストール
-	opkg install msmtp
+	$PKG_INSTALL msmtp
 
 	EOT
 

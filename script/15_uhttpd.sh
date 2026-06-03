@@ -5,7 +5,7 @@ echo '# 15.uhttpd'
 # uhttpd
 if [ "$SYSTEM_SSL_ENABLE" ] && [ "$SYSTEM_SSL_ENABLE" != 0 ]; then
 	cat <<- EOT
-	opkg install luci-app-uhttpd
+	\$PKG_INSTALL luci-app-uhttpd
 	uci set uhttpd.main.redirect_https='1'
 	EOT
 
