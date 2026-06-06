@@ -365,6 +365,32 @@ done
 '
 fi
 
+if [ "$GLINET_MODEL" = 'WSR2533DHP2' ]; then
+	# 内部構成
+	glinet_has_switch=1
+	glinet_switch_name=eth0
+	glinet_switch_port_cpu=6
+	glinet_switch_port_wan=4
+	glinet_switch_port_lan1=0
+	glinet_switch_port_lan2=1
+	glinet_switch_port_lan3=2
+	glinet_switch_port_lan4=3
+	glinet_ethernet_wan1_name=eth0.2
+	glinet_ethernet_lan1_name=eth0.1
+	glinet_ethernet_lan2_name=eth0.1
+	glinet_ethernet_lan3_name=eth0.1
+	glinet_ethernet_lan4_name=eth0.1
+	glinet_interface_admin=eth0.1
+	glinet_interface_lan=eth0
+
+	# SSID最大数
+	wifi_ssid_max=16
+
+	# 無線周波数帯
+	wireless_2g_name=radio0
+	wireless_5g1_name=radio1
+fi
+
 # スペース区切りの文字列を分割し、複数行で処理するためのサブルーチン
 function printf_multi() {
 	array=($2)
