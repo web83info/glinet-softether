@@ -27,8 +27,8 @@ if [ "$SYSTEM_SSL_ENABLE" ] && [ "$SYSTEM_SSL_ENABLE" != 0 ]; then
 	if [ "$SYSTEM_SSL_CERT_BY" = 'lets_encrypt' ]; then
 		cat <<- EOT
 		# SSL証明書取得
-		/etc/init.d/acme start
-		/etc/init.d/acme renew
+		service acme enable
+		service acme start
 
 		EOT
 	fi

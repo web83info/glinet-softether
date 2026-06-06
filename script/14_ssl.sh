@@ -27,7 +27,6 @@ if [ "$SYSTEM_SSL_ENABLE" ] && [ "$SYSTEM_SSL_ENABLE" != 0 ]; then
 			uci set acme.lets_encrypt.key_type='rsa2048'
 
 			sed -i 's/exit 0//g' /etc/rc.local
-			echo '/etc/init.d/acme renew' >> /etc/rc.local
 		EOT
 	fi
 fi
