@@ -1,12 +1,24 @@
-# 00.実行開始
+# 00.初期設定等
+
+# セットアップログ
+#   セットアップファイル名からログファイル名を生成（例：setup.sh => setup.log）
+#   これ以降の標準出力と標準エラー出力をすべて tee に流す
+cat <<- 'EOT'
+# 00.初期設定等
+LOG_FILE="$(basename "$0" .sh).log"
+exec > >(tee -a "$LOG_FILE") 2>&1
+
+EOT
+
+# 実行開始
 echo "echo '実行開始時刻'"
 echo 'date'
 echo 'echo'
 echo
 
-# 00.スクリプトコメント
+# スクリプトコメント
 
-echo '# 00.スクリプトコメント'
+echo '# スクリプトコメント'
 
 for i in $(seq 1 9)
 do
@@ -19,9 +31,9 @@ do
 done
 echo
 
-# 00.パッケージマネージャー判定
+# パッケージマネージャー判定
 cat <<- 'EOT'
-# 00.パッケージマネージャー判定
+# パッケージマネージャー判定
 if type apk > /dev/null 2>&1; then
     PKG_UPDATE="apk update"
     PKG_INSTALLED="apk info"
