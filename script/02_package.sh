@@ -2,6 +2,13 @@
 
 echo '# 02.パッケージインストール・アップグレード'
 
+# 自動アップグレードチェックダイアログを表示させない
+cat <<- 'EOT'
+uci -q get attendedsysupgrade.client || uci set attendedsysupgrade.client=attendedsysupgrade
+uci set attendedsysupgrade.client.login_check_for_upgrades='0'
+
+EOT
+
 cat <<- 'EOT'
 # パッケージリスト取得
 $PKG_UPDATE
